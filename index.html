@@ -3,73 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aromathérapie – Démonstration</title>
+<title>Formulation clinique d'huiles essentielles</title>
 <style>
-  body {font-family: system-ui, -apple-system, Roboto, Arial; margin: 0; padding: 2rem; background: #fafafa;}
-  h1 {text-align: center;}
-  .controls {text-align: center; margin-bottom: 1rem;}
-  select {padding: .5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;}
-  .grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;}
-  .card {background: white; border: 1px solid #ddd; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-  .card h3 {margin: 0 0 .3rem;}
-  .card small {color: #666;}
-  .family {color: #2a7; font-weight: 500;}
+  body {font-family: system-ui, -apple-system, Roboto, Arial; margin:0; padding:2rem; background:#f8f8f8;}
+  h1 {text-align:center; margin-bottom:1rem;}
+  .controls {text-align:center; margin-bottom:1rem;}
+  input {padding:0.5rem; width:80%; max-width:400px; border-radius:8px; border:1px solid #ccc;}
+  .grid {display:grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap:1rem;}
+  .card {background:white; border:1px solid #ddd; border-radius:12px; padding:1rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);}
+  .card h3 {margin:0 0 .3rem;}
+  .card small {color:#666;}
+  .family {color:#2a7; font-weight:500;}
+  table {width:100%; border-collapse:collapse; margin-top:1rem; background:white;}
+  th, td {border:1px solid #ccc; padding:0.5rem; text-align:center;}
+  th {background:#eee;}
+  .summary {margin-top:1rem; padding:1rem; background:white; border-radius:12px; border:1px solid #ddd;}
 </style>
 </head>
 <body>
 
-<h1>🌿 Base d’huiles essentielles</h1>
+<h1>🧪 Formulation clinique d'huiles essentielles</h1>
+
 <div class="controls">
-  <label for="tri">Trier par :</label>
-  <select id="tri">
-    <option value="alpha">Ordre alphabétique</option>
-    <option value="famille">Famille botanique</option>
-  </select>
+  <input type="text" id="search" placeholder="Recherche par nom, molécules, propriétés…">
 </div>
 
-<div id="contenu" class="grid"></div>
+<div id="listeHE" class="grid"></div>
+
+<h2>Mélange sélectionné</h2>
+<table id="melangeTable">
+  <thead>
+    <tr>
+      <th>HE</th>
+      <th>Molécules principales</th>
+      <th>Propriétés</th>
+      <th>Indications</th>
+      <th>Voie d'utilisation</th>
+      <th>Supprimer</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<div class="summary" id="resume">
+  <strong>Résumé des molécules cumulées et propriétés :</strong>
+  <div id="moleculesCumul"></div>
+  <div id="proprietesCumul"></div>
+</div>
 
 <script>
 const huiles = [
-  {"nom":"Lavande vraie","latin":"Lavandula angustifolia","famille":"Lamiaceae","familles_chimiques":"Esters, Monoterpénols","proprietes":"Calmante, Antispasmodique, Régénératrice cutanée","composition":"Linalol (35%), Acétate de linalyle (40%)"},
-  {"nom":"Tea tree","latin":"Melaleuca alternifolia","famille":"Myrtaceae","familles_chimiques":"Monoterpénols, Monoterpènes","proprietes":"Antibactérienne, Antifongique, Immunostimulante","composition":"Terpinène-4-ol (40%), γ-Terpinène (20%)"},
-  {"nom":"Menthe poivrée","latin":"Mentha × piperita","famille":"Lamiaceae","familles_chimiques":"Monoterpénols, Cétones","proprietes":"Tonique, Digestive, Antalgique locale","composition":"Menthol (40%), Menthone (20%)"},
-  {"nom":"Eucalyptus globulus","latin":"Eucalyptus globulus","famille":"Myrtaceae","familles_chimiques":"Oxydes, Monoterpènes","proprietes":"Expectorante, Antivirale, Décongestionnante","composition":"1,8-cinéole (70%)"},
-  {"nom":"Citron","latin":"Citrus limon","famille":"Rutaceae","familles_chimiques":"Monoterpènes","proprietes":"Tonique, Dépurative, Antiseptique aérienne","composition":"Limonène (65%), β-pinène (10%)"},
-  {"nom":"Ravintsara","latin":"Cinnamomum camphora ct. cineole","famille":"Lauraceae","familles_chimiques":"Oxydes, Monoterpènes","proprietes":"Antivirale, Immunostimulante, Expectorante","composition":"1,8-cinéole (55%), α-terpinéol (10%)"},
-  {"nom":"Ylang-ylang complète","latin":"Cananga odorata","famille":"Annonaceae","familles_chimiques":"Esters, Sesquiterpènes","proprietes":"Relaxante, Hypotensive, Aphrodisiaque","composition":"Germacrène D (15%), Benzoate de benzyle (10%)"},
-  {"nom":"Encens oliban","latin":"Boswellia carterii","famille":"Burseraceae","familles_chimiques":"Monoterpènes, Sesquiterpènes","proprietes":"Apaisante, Anti-inflammatoire, Spirituelle","composition":"α-pinène (35%), Limonène (15%)"},
-  {"nom":"Basilic tropical","latin":"Ocimum basilicum ct. methylchavicol","famille":"Lamiaceae","familles_chimiques":"Phénylpropanoïdes","proprietes":"Antispasmodique, Digestive, Tonique nerveuse","composition":"Méthylchavicol (70%)"},
-  {"nom":"Thym à linalol","latin":"Thymus vulgaris ct. linalol","famille":"Lamiaceae","familles_chimiques":"Monoterpénols","proprietes":"Antibactérienne douce, Immunostimulante","composition":"Linalol (65%)"}
+  {
+    nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
+    molecules:[{nom:"Linalol",pct:35},{nom:"Acétate de linalyle",pct:40}],
+    proprietes:["Calmante","Antispasmodique","Régénératrice cutanée"],
+    indications:["Stress","Troubles du sommeil"],
+    voies:["Voie cutanée","Voie olfactive"]
+  },
+  {
+    nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
+    molecules:[{nom:"Terpinène-4-ol",pct:40},{nom:"γ-Terpinène",pct:20}],
+    proprietes:["Antibactérienne","Antifongique","Immunostimulante"],
+    indications:["Infections cutanées","Acné"],
+    voies:["Voie cutanée","Diffusion"]
+  },
+  {
+    nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
+    molecules:[{nom:"Menthol",pct:40},{nom:"Menthone",pct:20}],
+    proprietes:["Tonique","Digestive","Antalgique locale"],
+    indications:["Maux de tête","Troubles digestifs"],
+    voies:["Voie cutanée","Voie orale diluée"]
+  },
+  {
+    nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
+    molecules:[{nom:"Limonène",pct:65},{nom:"β-pinène",pct:10}],
+    proprietes:["Tonique","Dépurative","Antiseptique aérienne"],
+    indications:["Fatigue","Digestif"],
+    voies:["Diffusion","Voie cutanée"]
+  },
+  {
+    nom:"Ylang-ylang complète", latin:"Cananga odorata", famille:"Annonaceae",
+    molecules:[{nom:"Germacrène D",pct:15},{nom:"Benzoate de benzyle",pct:10}],
+    proprietes:["Relaxante","Hypotensive","Aphrodisiaque"],
+    indications:["Stress","Hypertension"],
+    voies:["Voie cutanée","Diffusion"]
+  }
 ];
 
-function afficher(liste) {
-  const c = document.getElementById('contenu');
-  c.innerHTML = '';
-  liste.forEach(h => {
-    c.innerHTML += `
-      <div class="card">
-        <h3>${h.nom}</h3>
-        <small><em>${h.latin}</em></small>
-        <p class="family">${h.famille}</p>
-        <p><strong>Familles chimiques :</strong> ${h.familles_chimiques}</p>
-        <p><strong>Propriétés :</strong> ${h.proprietes}</p>
-        <p><strong>Composition :</strong> ${h.composition}</p>
-      </div>
+let melange = [];
+
+function renderListe() {
+  const search = document.getElementById("search").value.toLowerCase();
+  const container = document.getElementById("listeHE");
+  container.innerHTML="";
+  huiles.filter(h=>h.nom.toLowerCase().includes(search) || h.molecules.some(m=>m.nom.toLowerCase().includes(search)) || h.proprietes.join(" ").toLowerCase().includes(search))
+        .forEach(h=>{
+    const card = document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <h3>${h.nom}</h3>
+      <small><em>${h.latin}</em></small>
+      <p class="family">${h.famille}</p>
+      <p><strong>Molécules :</strong> ${h.molecules.map(m=>m.nom+" ("+m.pct+"%)").join(", ")}</p>
+      <p><strong>Propriétés :</strong> ${h.proprietes.join(", ")}</p>
+      <p><strong>Indications :</strong> ${h.indications.join(", ")}</p>
+      <p><strong>Voies :</strong> ${h.voies.join(", ")}</p>
+      <button onclick="ajouterMelange('${h.nom}')">Ajouter au mélange</button>
     `;
+    container.appendChild(card);
   });
 }
 
-function trier() {
-  const mode = document.getElementById('tri').value;
-  let copie = [...huiles];
-  if (mode === 'alpha') copie.sort((a,b) => a.nom.localeCompare(b.nom));
-  if (mode === 'famille') copie.sort((a,b) => a.famille.localeCompare(b.famille) || a.nom.localeCompare(b.nom));
-  afficher(copie);
+function ajouterMelange(nomHE) {
+  const he = huiles.find(h=>h.nom===nomHE);
+  if(!melange.includes(he)) melange.push(he);
+  renderMelange();
 }
 
-document.getElementById('tri').addEventListener('change', trier);
-trier();
+function supprimerHE(index) {
+  melange.splice(index,1);
+  renderMelange();
+}
+
+function renderMelange() {
+  const tbody = document.querySelector("#melangeTable tbody");
+  tbody.innerHTML="";
+  let cumulMolecules = {};
+  let cumulProprietes = new Set();
+  melange.forEach((h,i)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML=`
+      <td>${h.nom}</td>
+      <td>${h.molecules.map(m=>m.nom+" ("+m.pct+"%)").join(", ")}</td>
+      <td>${h.proprietes.join(", ")}</td>
+      <td>${h.indications.join(", ")}</td>
+      <td>${h.voies.join(", ")}</td>
+      <td><button onclick="supprimerHE(${i})">❌</button></td>
+    `;
+    tbody.appendChild(tr);
+    h.molecules.forEach(m=>{
+      cumulMolecules[m.nom] = (cumulMolecules[m.nom]||0)+m.pct;
+    });
+    h.proprietes.forEach(p=>cumulProprietes.add(p));
+  });
+  document.getElementById("moleculesCumul").innerHTML="<strong>Molécules cumulées :</strong> "+Object.entries(cumulMolecules).map(([k,v])=>k+" ("+v+"%)").join(", ");
+  document.getElementById("proprietesCumul").innerHTML="<strong>Propriétés du mélange :</strong> "+Array.from(cumulProprietes).join(", ");
+}
+
+document.getElementById("search").addEventListener("input", renderListe);
+renderListe();
 </script>
 
 </body>
