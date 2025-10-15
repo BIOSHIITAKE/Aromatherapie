@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aromathérapie – Démonstration</title>
+<style>
+  body {font-family: system-ui, -apple-system, Roboto, Arial; margin: 0; padding: 2rem; background: #fafafa;}
+  h1 {text-align: center;}
+  .controls {text-align: center; margin-bottom: 1rem;}
+  select {padding: .5rem; font-size: 1rem; border-radius: 8px; border: 1px solid #ccc;}
+  .grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;}
+  .card {background: white; border: 1px solid #ddd; border-radius: 12px; padding: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+  .card h3 {margin: 0 0 .3rem;}
+  .card small {color: #666;}
+  .family {color: #2a7; font-weight: 500;}
+</style>
+</head>
+<body>
+
+<h1>🌿 Base d’huiles essentielles</h1>
+<div class="controls">
+  <label for="tri">Trier par :</label>
+  <select id="tri">
+    <option value="alpha">Ordre alphabétique</option>
+    <option value="famille">Famille botanique</option>
+  </select>
+</div>
+
+<div id="contenu" class="grid"></div>
+
+<script>
+const huiles = [
+  {"nom":"Lavande vraie","latin":"Lavandula angustifolia","famille":"Lamiaceae","familles_chimiques":"Esters, Monoterpénols","proprietes":"Calmante, Antispasmodique, Régénératrice cutanée","composition":"Linalol (35%), Acétate de linalyle (40%)"},
+  {"nom":"Tea tree","latin":"Melaleuca alternifolia","famille":"Myrtaceae","familles_chimiques":"Monoterpénols, Monoterpènes","proprietes":"Antibactérienne, Antifongique, Immunostimulante","composition":"Terpinène-4-ol (40%), γ-Terpinène (20%)"},
+  {"nom":"Menthe poivrée","latin":"Mentha × piperita","famille":"Lamiaceae","familles_chimiques":"Monoterpénols, Cétones","proprietes":"Tonique, Digestive, Antalgique locale","composition":"Menthol (40%), Menthone (20%)"},
+  {"nom":"Eucalyptus globulus","latin":"Eucalyptus globulus","famille":"Myrtaceae","familles_chimiques":"Oxydes, Monoterpènes","proprietes":"Expectorante, Antivirale, Décongestionnante","composition":"1,8-cinéole (70%)"},
+  {"nom":"Citron","latin":"Citrus limon","famille":"Rutaceae","familles_chimiques":"Monoterpènes","proprietes":"Tonique, Dépurative, Antiseptique aérienne","composition":"Limonène (65%), β-pinène (10%)"},
+  {"nom":"Ravintsara","latin":"Cinnamomum camphora ct. cineole","famille":"Lauraceae","familles_chimiques":"Oxydes, Monoterpènes","proprietes":"Antivirale, Immunostimulante, Expectorante","composition":"1,8-cinéole (55%), α-terpinéol (10%)"},
+  {"nom":"Ylang-ylang complète","latin":"Cananga odorata","famille":"Annonaceae","familles_chimiques":"Esters, Sesquiterpènes","proprietes":"Relaxante, Hypotensive, Aphrodisiaque","composition":"Germacrène D (15%), Benzoate de benzyle (10%)"},
+  {"nom":"Encens oliban","latin":"Boswellia carterii","famille":"Burseraceae","familles_chimiques":"Monoterpènes, Sesquiterpènes","proprietes":"Apaisante, Anti-inflammatoire, Spirituelle","composition":"α-pinène (35%), Limonène (15%)"},
+  {"nom":"Basilic tropical","latin":"Ocimum basilicum ct. methylchavicol","famille":"Lamiaceae","familles_chimiques":"Phénylpropanoïdes","proprietes":"Antispasmodique, Digestive, Tonique nerveuse","composition":"Méthylchavicol (70%)"},
+  {"nom":"Thym à linalol","latin":"Thymus vulgaris ct. linalol","famille":"Lamiaceae","familles_chimiques":"Monoterpénols","proprietes":"Antibactérienne douce, Immunostimulante","composition":"Linalol (65%)"}
+];
+
+function afficher(liste) {
+  const c = document.getElementById('contenu');
+  c.innerHTML = '';
+  liste.forEach(h => {
+    c.innerHTML += `
+      <div class="card">
+        <h3>${h.nom}</h3>
+        <small><em>${h.latin}</em></small>
+        <p class="family">${h.famille}</p>
+        <p><strong>Familles chimiques :</strong> ${h.familles_chimiques}</p>
+        <p><strong>Propriétés :</strong> ${h.proprietes}</p>
+        <p><strong>Composition :</strong> ${h.composition}</p>
+      </div>
+    `;
+  });
+}
+
+function trier() {
+  const mode = document.getElementById('tri').value;
+  let copie = [...huiles];
+  if (mode === 'alpha') copie.sort((a,b) => a.nom.localeCompare(b.nom));
+  if (mode === 'famille') copie.sort((a,b) => a.famille.localeCompare(b.famille) || a.nom.localeCompare(b.nom));
+  afficher(copie);
+}
+
+document.getElementById('tri').addEventListener('change', trier);
+trier();
+</script>
+
+</body>
+</html>
