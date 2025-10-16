@@ -2,196 +2,235 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Formulation Clinique d'Huiles Essentielles - Master</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aromathérapie scientifique – Formulation galénique interactive par Laurent Aromathérapie scientifique</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f7f7f7; margin:0; padding:0;}
-header { background:#4a7c59; color:white; padding:15px 20px; text-align:center; }
-h1 { margin:0; font-size:26px; }
-.container { padding:20px; max-width:1400px; margin:auto; }
-.selectors, .mix, .synergy { margin-bottom:30px; }
-label { display:block; margin-top:10px; font-weight:bold; }
-input, select { padding:6px; width:300px; margin-top:5px; }
-table { border-collapse: collapse; width:100%; background:white; margin-top:10px;}
-table, th, td { border:1px solid #ccc;}
-th, td { padding:8px; text-align:left;}
-th { background:#eee; }
-button { padding:8px 15px; margin-top:10px; cursor:pointer; background:#4a7c59; color:white; border:none; border-radius:5px; }
-button:hover { background:#3e6c4d; }
-.alert { color:red; font-weight:bold; margin-top:5px; }
-.info-box { background:#fff3cd; padding:12px; border:1px solid #ffeeba; margin-top:10px; border-radius:5px; }
+  body {font-family:'Segoe UI', Roboto, sans-serif; background:#fafafa; margin:0; padding:0; color:#222;}
+  header {background:#4b7362; color:white; text-align:center; padding:1.5rem 1rem;}
+  h1 {margin:0; font-size:1.8rem;}
+  main {max-width:1100px; margin:2rem auto; padding:1rem;}
+  input, select {padding:0.6rem; font-size:1rem; border:1px solid #ccc; border-radius:8px; width:100%; margin-bottom:1rem;}
+  .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem;}
+  .card {background:white; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1rem; transition:transform 0.2s; cursor:pointer;}
+  .card:hover {transform:scale(1.02);}
+  .props span {background:#e6f4ea; padding:3px 7px; margin:2px; border-radius:5px; display:inline-block;}
+  #results {margin-top:2rem;}
+  table {width:100%; border-collapse:collapse; margin-top:1rem;}
+  th, td {border:1px solid #ddd; padding:0.5rem; text-align:center;}
+  th {background:#f0f0f0;}
+  #melangeSection, #synergieSection {margin-top:2rem;}
+  footer {background:#4b7362; color:white; text-align:center; padding:1rem; margin-top:3rem;}
+  .btnSuppr {background:#c33;color:white;border:none;padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;}
+  .synergieBox {background:#e6f4ea; padding:1rem; border-radius:10px; margin-top:1rem;}
 </style>
 </head>
 <body>
 <header>
-<h1>Formulation Clinique d'Huiles Essentielles - Master</h1>
-<p>Application scientifique hyper-fonctionnelle pour aromathérapie avancée</p>
+  <h1>🌿 Aromathérapie scientifique – Formulation galénique interactive</h1>
+  <p>Recherchez, sélectionnez vos HE et créez votre mélange personnalisé</p>
 </header>
 
-<div class="container">
+<main>
+  <!-- Recherches et filtres -->
+  <input type="text" id="searchInput" placeholder="🔍 Recherchez une molécule, une propriété ou une huile essentielle...">
+  <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
+    <select id="filterVoie">
+      <option value="">Toutes les voies</option>
+      <option>Cutanée</option>
+      <option>Orale</option>
+      <option>Diffusion</option>
+    </select>
+    <select id="filterIndication">
+      <option value="">Toutes les indications</option>
+      <option>Stress</option>
+      <option>Acné</option>
+      <option>Fatigue</option>
+      <option>Douleurs articulaires</option>
+      <option>Troubles digestifs</option>
+      <option>Troubles du sommeil</option>
+      <option>Hypertension</option>
+      <option>Infections cutanées</option>
+      <option>Maux de tête</option>
+      <option>Rétention d’eau</option>
+    </select>
+    <select id="filterRisques">
+      <option value="">Tous les risques</option>
+      <option>Grossesse</option>
+      <option>Insuffisance rénale</option>
+      <option>Aucun</option>
+    </select>
+  </div>
 
-<!-- Sélecteurs -->
-<div class="selectors">
-<h2>Recherche et ajout d'HE</h2>
+  <!-- Résultats HE -->
+  <div id="results" class="grid"></div>
 
-<label for="heSelect">Choisir une HE :</label>
-<select id="heSelect">
-<option value="">--Choisir--</option>
-</select>
+  <!-- Mélange sélectionné -->
+  <section id="melangeSection">
+    <h2>🧪 Mélange sélectionné</h2>
+    <table id="melangeTable">
+      <thead>
+        <tr><th>HE</th><th>Molécules principales</th><th>Propriétés</th><th>Indications</th><th>Voies</th><th>Supprimer</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
 
-<label for="searchMolecule">Recherche par molécule :</label>
-<input type="text" id="searchMolecule" placeholder="Ex: linalol, limonene, menthol">
+  <!-- Calculateur de synergie -->
+  <section id="synergieSection">
+    <h2>⚗️ Synthèse moléculaire et propriétés cumulées</h2>
+    <div class="synergieBox" id="synergieBox">
+      <p>Aucune HE sélectionnée.</p>
+    </div>
+  </section>
 
-<label for="filterVoie">Filtrer par voie :</label>
-<select id="filterVoie">
-<option value="">--Toutes--</option>
-<option>Voie cutanée</option>
-<option>Voie olfactive</option>
-<option>Diffusion</option>
-<option>Voie orale diluée</option>
-</select>
+  <!-- Synthèse galénique -->
+  <section id="galenique">
+    <h2>📋 Synthèse galénique et pharmaceutique</h2>
+    <table>
+      <tr><th>Voie / Cible</th><th>Objectif galénique</th><th>Formes recommandées</th><th>Excipients / vecteurs</th><th>Contraintes de stabilité</th><th>Références</th></tr>
+      <tr><td>Orale systémique</td><td>Libération rapide ou prolongée</td><td>Gélules molles, micro-émulsions</td><td>TCM, lécithine, polysorbates</td><td>Oxydation, hydrolyse</td><td>Cimino (2021), Kaspute (2025)</td></tr>
+      <tr><td>Cutanée</td><td>Effet topique local</td><td>Crèmes, gels, pommades</td><td>Jojoba, argan, lécithine</td><td>Oxydation, séparation</td><td>Nammas (2024)</td></tr>
+      <tr><td>Diffusion atmosphérique</td><td>Effet olfactif neurovégétatif</td><td>Diffuseurs à froid</td><td>Cyclodextrines, céramiques</td><td>Volatilité excessive</td><td>Zhou (2024)</td></tr>
+    </table>
+  </section>
+</main>
 
-<label for="filterUser">Filtrer par utilisateur :</label>
-<select id="filterUser">
-<option value="">--Tous--</option>
-<option value="grossesse">Grossesse</option>
-<option value="ageMin">Age minimum</option>
-</select>
-
-<button id="addHE">Ajouter au mélange</button>
-</div>
-
-<!-- Mélange sélectionné -->
-<div class="mix">
-<h2>Mélange Sélectionné</h2>
-<table id="mixTable">
-<thead>
-<tr>
-<th>HE</th>
-<th>Molécules principales</th>
-<th>Propriétés</th>
-<th>Indications</th>
-<th>Voie d'utilisation</th>
-<th>% dans mélange</th>
-<th>Supprimer</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-<div id="alerts"></div>
-<p id="synergySummary"></p>
-</div>
-
-<!-- Calculateur de synergie -->
-<div class="synergy">
-<h2>Calculateur de Synergie & Conseils Galéniques</h2>
-<ul id="synergyList"></ul>
-<div id="galenique" class="info-box"></div>
-</div>
-
-</div>
+<footer>
+  © 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5
+</footer>
 
 <script>
-// Base de données des HE
-const HUILLES = [
-{ nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
-  molecules:["Linalol","Acétate de linalyle"], propriétés:["Calmante","Antispasmodique","Régénératrice cutanée"],
-  indications:["Stress","Troubles du sommeil"], voies:["Voie cutanée","Voie olfactive"], restrictions:{grossesse:true, ageMin:7} },
+// --- Données HE ---
+const huiles = [
+  {nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
+   molecules:["Linalol","Acétate de linalyle"], proprietes:["Calmante","Antispasmodique","Régénératrice cutanée"],
+   indications:["Stress","Troubles du sommeil"], voies:["Cutanée","Olfactive"], risques:["Aucun"]},
 
-{ nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
-  molecules:["Terpinène-4-ol","γ-Terpinène"], propriétés:["Antibactérienne","Antifongique","Immunostimulante"],
-  indications:["Infections cutanées","Acné"], voies:["Voie cutanée","Diffusion"], restrictions:{grossesse:true, ageMin:7} },
+  {nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
+   molecules:["Terpinène-4-ol","γ-Terpinène"], proprietes:["Antibactérienne","Antifongique","Immunostimulante"],
+   indications:["Infections cutanées","Acné"], voies:["Cutanée","Diffusion"], risques:["Aucun"]},
 
-{ nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
-  molecules:["Menthol","Menthone"], propriétés:["Tonique","Digestive","Antalgique locale"],
-  indications:["Maux de tête","Troubles digestifs"], voies:["Voie cutanée","Voie orale diluée"], restrictions:{grossesse:true, ageMin:7} },
+  {nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
+   molecules:["Menthol","Menthone"], proprietes:["Tonique","Digestive","Antalgique locale"],
+   indications:["Maux de tête","Troubles digestifs"], voies:["Cutanée","Orale"], risques:["Aucun"]},
 
-{ nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
-  molecules:["Limonène","β-pinène"], propriétés:["Tonique","Dépurative","Antiseptique aérienne"],
-  indications:["Fatigue","Digestif"], voies:["Diffusion","Voie cutanée"], restrictions:{grossesse:true, ageMin:7} },
+  {nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
+   molecules:["Limonène","β-pinène"], proprietes:["Tonique","Dépurative","Antiseptique aérienne"],
+   indications:["Fatigue","Troubles digestifs"], voies:["Diffusion","Cutanée"], risques:["Aucun"]},
 
-{ nom:"Ylang-ylang complète", latin:"Cananga odorata", famille:"Annonaceae",
-  molecules:["Germacrène D","Benzoate de benzyle"], propriétés:["Relaxante","Hypotensive","Aphrodisiaque"],
-  indications:["Stress","Hypertension"], voies:["Voie cutanée","Diffusion"], restrictions:{grossesse:true, ageMin:7} },
+  {nom:"Ylang-ylang", latin:"Cananga odorata", famille:"Annonaceae",
+   molecules:["Germacrène D","Benzoate de benzyle"], proprietes:["Relaxante","Hypotensive","Aphrodisiaque"],
+   indications:["Stress","Hypertension"], voies:["Cutanée","Diffusion"], risques:["Grossesse"]},
 
-{ nom:"Genévrier commun", latin:"Juniperus communis", famille:"Cupressacées",
-  molecules:["α-pinène","sabinène","myrcène","germacrène","β-caryophyllène","terpinène-4-ol"],
-  propriétés:["Anti-inflammatoire","Cholagogue","Anti-infectieuse"],
-  indications:["Stimulation hépatique","Infections"], voies:["Voie cutanée","Diffusion"], restrictions:{grossesse:true, ageMin:7} }
+  {nom:"Genévrier commun", latin:"Juniperus communis", famille:"Cupressaceae",
+   molecules:["α-pinène","Sabinène","Myrcène"], proprietes:["Drainante","Dépurative","Antirhumatismale"],
+   indications:["Rétention d’eau","Douleurs articulaires"], voies:["Cutanée","Orale"], risques:["Insuffisance rénale"]}
 ];
 
-let mix = [];
+// --- Normalisation pour recherche ---
+function normalize(str){return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
 
-// Init select
-const heSelect = document.getElementById('heSelect');
-HUILLES.forEach((he,i)=>{ let opt = document.createElement('option'); opt.value=i; opt.textContent=he.nom; heSelect.appendChild(opt); });
+// --- Mélange sélectionné ---
+let melange = [];
 
-// Normalisation accents
-function normalize(str){ return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase(); }
+// --- Filtrage HE ---
+function filterResults(){
+  const query=normalize(document.getElementById('searchInput').value);
+  const voie=document.getElementById('filterVoie').value;
+  const indication=document.getElementById('filterIndication').value;
+  const risque=document.getElementById('filterRisques').value;
+  const container=document.getElementById('results'); container.innerHTML='';
 
-// Ajouter HE
-document.getElementById('addHE').addEventListener('click',()=>{
-  const idx = heSelect.value;
-  if(idx==="") return alert("Veuillez choisir une HE.");
-  const he = HUILLES[idx];
-  if(mix.includes(he)) return alert("HE déjà dans le mélange !");
-  mix.push(he); updateMixTable(); updateSynergy();
-});
+  const matches=huiles.filter(h=>{
+    const fields=[h.nom,h.latin,...h.molecules,...h.proprietes,...h.indications];
+    let textMatch=query?fields.some(f=>normalize(f).includes(query)):true;
+    let voieMatch=!voie||h.voies.includes(voie);
+    let indMatch=!indication||h.indications.includes(indication);
+    let risqueMatch=!risque||(risque==="Tous les risques"||h.risques.includes(risque));
+    return textMatch && voieMatch && indMatch && risqueMatch;
+  });
 
-// Recherche molécule
-document.getElementById('searchMolecule').addEventListener('input',(e)=>{
-  const val = normalize(e.target.value);
-  heSelect.innerHTML='<option value="">--Choisir--</option>';
-  HUILLES.forEach((he,i)=>{ if(he.molecules.some(m=>normalize(m).includes(val))){ let opt=document.createElement('option'); opt.value=i; opt.textContent=he.nom; heSelect.appendChild(opt); } });
-});
+  if(matches.length===0){container.innerHTML='<p style="text-align:center;color:#c33;">Aucun résultat trouvé.</p>';return;}
 
-// Table mélange
-function updateMixTable(){
-  const tbody = document.querySelector('#mixTable tbody'); tbody.innerHTML="";
-  mix.forEach((he,i)=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML=`<td>${he.nom}</td>
-                  <td>${he.molecules.join(", ")}</td>
-                  <td>${he.propriétés.join(", ")}</td>
-                  <td>${he.indications.join(", ")}</td>
-                  <td>${he.voies.join(", ")}</td>
-                  <td>${(100/mix.length).toFixed(1)}%</td>
-                  <td><button onclick="removeHE(${i})">Supprimer</button></td>`;
+  matches.forEach(h=>{
+    const card=document.createElement('div');
+    card.className='card';
+    card.innerHTML=`<h3>${h.nom}</h3><em>${h.latin}</em><br><strong>Famille :</strong> ${h.famille}<br><br>
+      <strong>Molécules :</strong> ${h.molecules.join(', ')}<br>
+      <strong>Propriétés :</strong> ${h.proprietes.join(', ')}<br>
+      <strong>Indications :</strong> ${h.indications.join(', ')}<br>
+      <strong>Voies :</strong> ${h.voies.join(', ')}<br>
+      <strong>Risques :</strong> ${h.risques.join(', ')}`;
+    card.addEventListener('click',()=>addToMelange(h));
+    container.appendChild(card);
+  });
+}
+
+// --- Ajouter HE au mélange ---
+function addToMelange(he){
+  if(melange.includes(he)) return;
+  melange.push(he);
+  updateMelangeTable();
+  updateSynergie();
+}
+
+// --- Supprimer HE du mélange ---
+function removeFromMelange(index){
+  melange.splice(index,1);
+  updateMelangeTable();
+  updateSynergie();
+}
+
+// --- Mettre à jour tableau mélange ---
+function updateMelangeTable(){
+  const tbody=document.querySelector('#melangeTable tbody');
+  tbody.innerHTML='';
+  melange.forEach((h,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${h.nom}</td>
+      <td>${h.molecules.join(', ')}</td>
+      <td>${h.proprietes.join(', ')}</td>
+      <td>${h.indications.join(', ')}</td>
+      <td>${h.voies.join(', ')}</td>
+      <td><button class="btnSuppr" onclick="removeFromMelange(${i})">×</button></td>`;
     tbody.appendChild(tr);
   });
 }
 
-function removeHE(i){ mix.splice(i,1); updateMixTable(); updateSynergy(); }
+// --- Calculateur de synergie ---
+function updateSynergie(){
+  const box=document.getElementById('synergieBox');
+  if(melange.length===0){box.innerHTML='<p>Aucune HE sélectionnée.</p>';return;}
 
-// Calcul synergie
-function updateSynergy(){
-  const ul = document.getElementById('synergyList'); ul.innerHTML="";
-  const alertsDiv = document.getElementById('alerts'); alertsDiv.innerHTML="";
-  const gal = document.getElementById('galenique'); gal.innerHTML="";
-
-  let props = new Set(), voies = new Set(), warnings = [];
-
-  mix.forEach(he=>{
-    he.propriétés.forEach(p=>props.add(p));
-    he.voies.forEach(v=>voies.add(v));
-    if(he.restrictions.grossesse) warnings.push(`${he.nom} : éviter pendant grossesse`);
-    if(he.restrictions.ageMin) warnings.push(`${he.nom} : âge minimum ${he.restrictions.ageMin} ans`);
+  let molecules=[], proprietes=[], indications=[], voies=[];
+  melange.forEach(h=>{
+    molecules.push(...h.molecules);
+    proprietes.push(...h.proprietes);
+    indications.push(...h.indications);
+    voies.push(...h.voies);
   });
 
-  // Exemples interactions simples
-  if(voies.has("Voie orale diluée") && voies.has("Diffusion")) warnings.push("Attention : certaines HE orales ne doivent pas être diffusées simultanément !");
+  // Supprimer doublons
+  molecules=[...new Set(molecules)];
+  proprietes=[...new Set(proprietes)];
+  indications=[...new Set(indications)];
+  voies=[...new Set(voies)];
 
-  if(warnings.length){ alertsDiv.innerHTML=warnings.map(w=>`<div class="alert">${w}</div>`).join(""); }
-
-  props.forEach(p=>{ const li=document.createElement('li'); li.textContent=p; ul.appendChild(li); });
-
-  if(mix.length>0){
-    gal.innerHTML=`<strong>Conseils galéniques :</strong><br>
-    Pour ${mix.length} HE : utiliser des bases adaptées selon la voie (huile végétale pour cutanée, micro-émulsions pour orale, diffuseur pour olfactive).<br>
-    Respecter doses maximales, restrictions et compatibilités des voies.`;
-  }
-
-  document.getElementById('synergySummary').textContent=`Propriétés cumulées: ${Array.from(props).join(", ")} | Voies utilisées: ${Array.from(voies).join(", ")}`;
+  box.innerHTML=`
+    <strong>Molécules cumulées :</strong> ${molecules.join(', ')}<br>
+    <strong>Propriétés cumulées :</strong> ${proprietes.join(', ')}<br>
+    <strong>Indications cumulées :</strong> ${indications.join(', ')}<br>
+    <strong>Voies cumulées :</strong> ${voies.join(', ')}`;
 }
+
+// --- Événements ---
+document.getElementById('searchInput').addEventListener('input',filterResults);
+document.getElementById('filterVoie').addEventListener('change',filterResults);
+document.getElementById('filterIndication').addEventListener('change',filterResults);
+document.getElementById('filterRisques').addEventListener('change',filterResults);
+
+// --- Affichage initial ---
+filterResults();
 </script>
 </body>
 </html>
