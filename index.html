@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formulation clinique d'huiles essentielles</title>
+<title>Formulation & Galénique d'Huiles Essentielles</title>
 <style>
-  body {font-family: system-ui, -apple-system, Roboto, Arial; margin:0; padding:2rem; background:#f8f8f8;}
-  h1 {text-align:center; margin-bottom:1rem;}
-  .controls {text-align:center; margin-bottom:1rem;}
-  input {padding:0.5rem; width:80%; max-width:400px; border-radius:8px; border:1px solid #ccc;}
-  .grid {display:grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap:1rem;}
+  /* === Styles globaux === */
+  body {font-family: system-ui, -apple-system, Roboto, Arial; margin:0; padding:2rem; background:#f8f8f8; color:#222;}
+  h1,h2 {text-align:center; color:#00695c;}
+  .menu {text-align:center; margin-bottom:2rem;}
+  .menu a {margin:0 1rem; text-decoration:none; color:#004d40; font-weight:500;}
+  .menu a:hover {text-decoration:underline;}
+  input {padding:0.5rem; width:80%; max-width:400px; border-radius:8px; border:1px solid #ccc; margin-bottom:1rem; display:block; margin-left:auto; margin-right:auto;}
+  
+  /* === Module Formulation clinique === */
+  .grid {display:grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap:1rem; margin-bottom:2rem;}
   .card {background:white; border:1px solid #ddd; border-radius:12px; padding:1rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);}
   .card h3 {margin:0 0 .3rem;}
   .card small {color:#666;}
@@ -18,16 +23,39 @@
   th, td {border:1px solid #ccc; padding:0.5rem; text-align:center;}
   th {background:#eee;}
   .summary {margin-top:1rem; padding:1rem; background:white; border-radius:12px; border:1px solid #ddd;}
+  
+  /* === Module Galénique === */
+  .galenique {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #fafafa;
+    margin: 2em auto;
+    max-width: 1200px;
+    color: #222;
+    line-height: 1.5;
+    padding: 1em;
+    border-radius:12px;
+    border:1px solid #ddd;
+  }
+  .galenique h1,.galenique h2,.galenique h3 {color:#00695c;}
+  .galenique table {border-collapse: collapse; width: 100%; margin-bottom: 2em; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+  .galenique th,.galenique td {border: 1px solid #ddd; padding: 10px; vertical-align: top;}
+  .galenique th {background-color: #e0f2f1; color: #004d40;}
+  .galenique tr:nth-child(even) {background-color: #f7f7f7;}
+  .galenique footer {text-align: center; font-size: 0.9em; color: #666; margin-top: 2em;}
 </style>
 </head>
+
 <body>
 
-<h1>🧪 Formulation clinique d'huiles essentielles</h1>
-
-<div class="controls">
-  <input type="text" id="search" placeholder="Recherche par nom, molécules, propriétés…">
+<!-- === Menu navigation interne === -->
+<div class="menu">
+  <a href="#formulation">Formulation Clinique</a>
+  <a href="#galenique">Galénique</a>
 </div>
 
+<!-- === Module Formulation Clinique === -->
+<h1 id="formulation">🧪 Formulation clinique d'huiles essentielles</h1>
+<input type="text" id="search" placeholder="Recherche par nom, molécules, propriétés…">
 <div id="listeHE" class="grid"></div>
 
 <h2>Mélange sélectionné</h2>
@@ -53,36 +81,31 @@
 
 <script>
 const huiles = [
-  {
-    nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
+  {nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
     molecules:[{nom:"Linalol",pct:35},{nom:"Acétate de linalyle",pct:40}],
     proprietes:["Calmante","Antispasmodique","Régénératrice cutanée"],
     indications:["Stress","Troubles du sommeil"],
     voies:["Voie cutanée","Voie olfactive"]
   },
-  {
-    nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
+  {nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
     molecules:[{nom:"Terpinène-4-ol",pct:40},{nom:"γ-Terpinène",pct:20}],
     proprietes:["Antibactérienne","Antifongique","Immunostimulante"],
     indications:["Infections cutanées","Acné"],
     voies:["Voie cutanée","Diffusion"]
   },
-  {
-    nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
+  {nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
     molecules:[{nom:"Menthol",pct:40},{nom:"Menthone",pct:20}],
     proprietes:["Tonique","Digestive","Antalgique locale"],
     indications:["Maux de tête","Troubles digestifs"],
     voies:["Voie cutanée","Voie orale diluée"]
   },
-  {
-    nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
+  {nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
     molecules:[{nom:"Limonène",pct:65},{nom:"β-pinène",pct:10}],
     proprietes:["Tonique","Dépurative","Antiseptique aérienne"],
     indications:["Fatigue","Digestif"],
     voies:["Diffusion","Voie cutanée"]
   },
-  {
-    nom:"Ylang-ylang complète", latin:"Cananga odorata", famille:"Annonaceae",
+  {nom:"Ylang-ylang complète", latin:"Cananga odorata", famille:"Annonaceae",
     molecules:[{nom:"Germacrène D",pct:15},{nom:"Benzoate de benzyle",pct:10}],
     proprietes:["Relaxante","Hypotensive","Aphrodisiaque"],
     indications:["Stress","Hypertension"],
@@ -141,9 +164,7 @@ function renderMelange() {
       <td><button onclick="supprimerHE(${i})">❌</button></td>
     `;
     tbody.appendChild(tr);
-    h.molecules.forEach(m=>{
-      cumulMolecules[m.nom] = (cumulMolecules[m.nom]||0)+m.pct;
-    });
+    h.molecules.forEach(m=>{ cumulMolecules[m.nom] = (cumulMolecules[m.nom]||0)+m.pct; });
     h.proprietes.forEach(p=>cumulProprietes.add(p));
   });
   document.getElementById("moleculesCumul").innerHTML="<strong>Molécules cumulées :</strong> "+Object.entries(cumulMolecules).map(([k,v])=>k+" ("+v+"%)").join(", ");
@@ -152,53 +173,10 @@ function renderMelange() {
 
 document.getElementById("search").addEventListener("input", renderListe);
 renderListe();
-</script><div class="galenique">
-  <style>
-  /* Styles encapsulés pour le module galénique */
-  .galenique {
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    background-color: #fafafa;
-    margin: 2em auto;
-    max-width: 1200px;
-    color: #222;
-    line-height: 1.5;
-    padding: 1em;
-  }
-  .galenique h1, .galenique h2, .galenique h3 {
-    color: #00695c;
-  }
-  .galenique table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 2em;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .galenique th, .galenique td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    vertical-align: top;
-  }
-  .galenique th {
-    background-color: #e0f2f1;
-    color: #004d40;
-  }
-  .galenique tr:nth-child(even) {
-    background-color: #f7f7f7;
-  }
-  .galenique code {
-    background: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 4px;
-  }
-  .galenique footer {
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 2em;
-  }
-  </style>
+</script>
 
+<!-- === Section Galénique === -->
+<div id="galenique" class="galenique">
   <h1>Galénique et Aromathérapie Scientifique</h1>
   <p>
     Cette section synthétise les correspondances entre <strong>voies d’administration</strong>, 
