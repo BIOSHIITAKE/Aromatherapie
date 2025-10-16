@@ -2,142 +2,213 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Galénique et Aromathérapie Scientifique</title>
+<title>Formulation Clinique d'Huiles Essentielles</title>
 <style>
-body {
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background-color: #fafafa;
-  margin: 2em auto;
-  max-width: 1200px;
-  color: #222;
-  line-height: 1.5;
-}
-h1, h2, h3 {
-  color: #00695c;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 2em;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  vertical-align: top;
-}
-th {
-  background-color: #e0f2f1;
-  color: #004d40;
-}
-tr:nth-child(even) {
-  background-color: #f7f7f7;
-}
-code {
-  background: #f0f0f0;
-  padding: 2px 5px;
-  border-radius: 4px;
-}
-footer {
-  text-align: center;
-  font-size: 0.9em;
-  color: #666;
-  margin-top: 2em;
-}
+body { font-family: Arial, sans-serif; background: #f8f8f8; margin:0; padding:0;}
+header { background:#4a7c59; color:white; padding:10px 20px; text-align:center; }
+h1 { margin:0; font-size:24px; }
+.container { padding:20px; max-width:1200px; margin:auto; }
+.selectors, .mix, .synergy { margin-bottom:30px; }
+label { display:block; margin-top:10px; }
+input, select { padding:5px; width:250px; }
+table { border-collapse: collapse; width:100%; background:white; margin-top:10px;}
+table, th, td { border:1px solid #ccc;}
+th, td { padding:8px; text-align:left;}
+th { background:#eee; }
+button { padding:8px 15px; margin-top:10px; cursor:pointer; background:#4a7c59; color:white; border:none; }
+button:hover { background:#3e6c4d; }
+.mixed-he { margin-top:10px; }
+.alert { color:red; font-weight:bold; }
 </style>
 </head>
-
 <body>
-<h1>Galénique et Aromathérapie Scientifique</h1>
-<p>
-Cette page synthétise les correspondances entre <strong>voies d’administration</strong>, <strong>objectifs galéniques</strong>,
-<em>formes conseillées</em>, <em>excipients clés</em> et <em>critères de stabilité</em> pour les huiles essentielles et leurs principes actifs.
-</p>
+<header>
+<h1>Formulation Clinique d'Huiles Essentielles</h1>
+<p>Recherche par molécule, nom, propriétés, voies et calcul de synergie</p>
+</header>
 
-<table>
+<div class="container">
+
+<div class="selectors">
+<h2>Choix des Huiles Essentielles</h2>
+<label for="heSelect">Sélectionner une HE :</label>
+<select id="heSelect">
+<option value="">--Choisir--</option>
+</select>
+
+<label for="searchMolecule">Recherche par molécule :</label>
+<input type="text" id="searchMolecule" placeholder="Ex: linalol, limonene, menthol">
+
+<button id="addHE">Ajouter au mélange</button>
+</div>
+
+<div class="mix">
+<h2>Mélange Sélectionné</h2>
+<table id="mixTable">
 <thead>
 <tr>
-<th>Voie / Cible</th>
-<th>Objectif galénique</th>
-<th>Formes recommandées</th>
-<th>Excipients / vecteurs</th>
-<th>Contraintes de stabilité</th>
-<th>Références</th>
+<th>HE</th>
+<th>Molécules principales</th>
+<th>Propriétés</th>
+<th>Indications</th>
+<th>Voie d'utilisation</th>
+<th>% dans mélange</th>
+<th>Supprimer</th>
 </tr>
 </thead>
 <tbody>
-
-<tr>
-<td><strong>Orale systémique</strong></td>
-<td>Libération rapide ou prolongée selon l’effet recherché (antimicrobien, relaxant, tonique).</td>
-<td>Gélules molles, micro-émulsions buvables, liposomes, nanodispersions.</td>
-<td>Triglycérides à chaîne moyenne (TCM), huiles végétales stables, lécithine, polysorbates, cyclodextrines.</td>
-<td>Oxydation, hydrolyse acide, interaction avec sucs gastriques, précipitation, compatibilité excipient–molécule.</td>
-<td>Cimino C. et al. (2021), Kaspute G. et al. (2025)</td>
-</tr>
-
-<tr>
-<td><strong>Orale ciblée (intestinale / colon)</strong></td>
-<td>Protection gastrique, libération retardée dans l’intestin.</td>
-<td>Capsules gastro-résistantes, microcapsules entériques.</td>
-<td>Polymères pH-dépendants (Eudragit®, cellulose modifiée), liposomes entériques, matrices à pH sensible.</td>
-<td>Résistance à l’acidité, perméabilité intestinale, stabilité de la capsule.</td>
-<td>Bolgen U.M.G. et al. (2025), Cimino C. et al. (2021)</td>
-</tr>
-
-<tr>
-<td><strong>Cutanée (locale)</strong></td>
-<td>Effet topique sans diffusion systémique marquée.</td>
-<td>Crèmes, gels, pommades, micro-émulsions topiques.</td>
-<td>Huiles végétales antioxydantes (jojoba, argan, sésame), lécithine, polysorbate 20, gélifiants naturels (xanthane, guar), cyclodextrines.</td>
-<td>Oxydation, séparation de phase, irritation cutanée, compatibilité pH.</td>
-<td>Nammas M. et al. (2024), Kaspute G. et al. (2025)</td>
-</tr>
-
-<tr>
-<td><strong>Cutanée (transdermique)</strong></td>
-<td>Diffusion prolongée à travers la peau, effet systémique.</td>
-<td>Patchs aromatiques, nano-émulsions, systèmes matriciels.</td>
-<td>Nanovecteurs lipidiques, adhésifs biocompatibles, promoteurs de perméation (limonène, eucalyptol), esters de cire.</td>
-<td>Migration, décollement, évaporation, stabilité mécanique.</td>
-<td>Kaspute G. et al. (2025)</td>
-</tr>
-
-<tr>
-<td><strong>Respiratoire / muqueuse</strong></td>
-<td>Action rapide sur les voies respiratoires ou muqueuses nasales.</td>
-<td>Sprays liposomés, nébulisations isotoniques, aérosols micro-émulsifiés.</td>
-<td>Solutions isotoniques, phospholipides (lécithine), cyclodextrines, tensioactifs doux.</td>
-<td>Agrégation, pression / pulvérisation, irritation muqueuse, conservation microbiologique.</td>
-<td>Zhou L. et al. (2024), Cimino C. et al. (2021)</td>
-</tr>
-
-<tr>
-<td><strong>Diffusion atmosphérique (olfactive)</strong></td>
-<td>Libération progressive dans l’air ambiant, effet olfactif et neurovégétatif.</td>
-<td>Diffuseurs à froid, microcapsules volatiles, matrices polymériques parfumantes.</td>
-<td>Substrats poreux (céramique, silice), polymères à libération lente, cyclodextrines, gels structurés.</td>
-<td>Volatilité excessive, altération du polymère, interaction avec le diffuseur, changement de viscosité.</td>
-<td>Zhou L. et al. (2024)</td>
-</tr>
-
 </tbody>
 </table>
+<p id="synergySummary"></p>
+</div>
 
-<h2>Références bibliographiques</h2>
-<ul>
-<li><strong>Cimino C. et al.</strong>, <em>Essential Oils: Pharmaceutical Applications and Delivery Strategies</em>, PMC8001530 (2021).</li>
-<li><strong>Kaspute G. et al.</strong>, <em>Terpenes and Essential Oils in Pharmaceutics</em>, PMC12197171 (2025).</li>
-<li><strong>Bolgen U.M.G. et al.</strong>, <em>Essential oil-based nanoemulsions with current knowledge</em>, <a href="https://www.sciencedirect.com/science/article/pii/S0926669025009574">ScienceDirect</a> (2025).</li>
-<li><strong>Zhou L. et al.</strong>, <em>Cinnamon Essential Oil Delivery Systems</em>, Wiley FSN3.70814 (2024).</li>
-<li><strong>Nammas M. et al.</strong>, <em>Systematic Review of Plant-Based Excipients in Topical Drug Delivery</em>, Thieme Connect (2024).</li>
-</ul>
+<div class="synergy">
+<h2>Calculateur de Synergie</h2>
+<p>Synthèse des propriétés cumulées et alertes :</p>
+<ul id="synergyList"></ul>
+</div>
 
-<footer>
-<p>© 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5</p>
-</footer>
+</div>
+
+<script>
+// Liste des HE avec leurs données
+const HUILLES = [
+  {
+    nom: "Lavande vraie",
+    latin: "Lavandula angustifolia",
+    famille: "Lamiaceae",
+    molecules: ["Linalol", "Acétate de linalyle"],
+    propriétés: ["Calmante", "Antispasmodique", "Régénératrice cutanée"],
+    indications: ["Stress", "Troubles du sommeil"],
+    voies: ["Voie cutanée", "Voie olfactive"]
+  },
+  {
+    nom: "Tea tree",
+    latin: "Melaleuca alternifolia",
+    famille: "Myrtaceae",
+    molecules: ["Terpinène-4-ol", "γ-Terpinène"],
+    propriétés: ["Antibactérienne", "Antifongique", "Immunostimulante"],
+    indications: ["Infections cutanées", "Acné"],
+    voies: ["Voie cutanée", "Diffusion"]
+  },
+  {
+    nom: "Menthe poivrée",
+    latin: "Mentha × piperita",
+    famille: "Lamiaceae",
+    molecules: ["Menthol", "Menthone"],
+    propriétés: ["Tonique", "Digestive", "Antalgique locale"],
+    indications: ["Maux de tête", "Troubles digestifs"],
+    voies: ["Voie cutanée", "Voie orale diluée"]
+  },
+  {
+    nom: "Citron",
+    latin: "Citrus limon",
+    famille: "Rutaceae",
+    molecules: ["Limonène", "β-pinène"],
+    propriétés: ["Tonique", "Dépurative", "Antiseptique aérienne"],
+    indications: ["Fatigue", "Digestif"],
+    voies: ["Diffusion", "Voie cutanée"]
+  },
+  {
+    nom: "Ylang-ylang complète",
+    latin: "Cananga odorata",
+    famille: "Annonaceae",
+    molecules: ["Germacrène D", "Benzoate de benzyle"],
+    propriétés: ["Relaxante", "Hypotensive", "Aphrodisiaque"],
+    indications: ["Stress", "Hypertension"],
+    voies: ["Voie cutanée", "Diffusion"]
+  },
+  {
+    nom: "Genévrier commun",
+    latin: "Juniperus communis",
+    famille: "Cupressacées",
+    molecules: ["α-pinène", "sabinène", "myrcène", "germacrène", "β-caryophyllène", "terpinène-4-ol"],
+    propriétés: ["Anti-inflammatoire","Cholagogue","Anti-infectieuse"],
+    indications: ["Stimulation hépatique","Infections"],
+    voies: ["Voie cutanée", "Diffusion"]
+  }
+];
+
+let mix = [];
+
+// Initialiser le select
+const heSelect = document.getElementById('heSelect');
+HUILLES.forEach((he, i)=>{
+  let opt = document.createElement('option');
+  opt.value = i;
+  opt.textContent = he.nom;
+  heSelect.appendChild(opt);
+});
+
+// Fonction pour normaliser les chaînes (sans accents, minuscule)
+function normalize(str){
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+// Ajouter HE au mélange
+document.getElementById('addHE').addEventListener('click',()=>{
+  const index = heSelect.value;
+  if(index === "") return alert("Veuillez choisir une HE.");
+  const he = HUILLES[index];
+  if(mix.includes(he)) return alert("HE déjà dans le mélange !");
+  mix.push(he);
+  updateMixTable();
+  updateSynergy();
+});
+
+// Recherche molécule sans accent obligatoire
+document.getElementById('searchMolecule').addEventListener('input',(e)=>{
+  const val = normalize(e.target.value);
+  heSelect.innerHTML = '<option value="">--Choisir--</option>';
+  HUILLES.forEach((he,i)=>{
+    if(he.molecules.some(m => normalize(m).includes(val))){
+      let opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = he.nom;
+      heSelect.appendChild(opt);
+    }
+  });
+});
+
+function updateMixTable(){
+  const tbody = document.querySelector('#mixTable tbody');
+  tbody.innerHTML = "";
+  mix.forEach((he,i)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${he.nom}</td>
+                    <td>${he.molecules.join(", ")}</td>
+                    <td>${he.propriétés.join(", ")}</td>
+                    <td>${he.indications.join(", ")}</td>
+                    <td>${he.voies.join(", ")}</td>
+                    <td>${(100/mix.length).toFixed(1)}%</td>
+                    <td><button onclick="removeHE(${i})">Supprimer</button></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function removeHE(index){
+  mix.splice(index,1);
+  updateMixTable();
+  updateSynergy();
+}
+
+function updateSynergy(){
+  const ul = document.getElementById('synergyList');
+  ul.innerHTML = "";
+  let props = new Set();
+  let voies = new Set();
+  mix.forEach(he=>{
+    he.propriétés.forEach(p=>props.add(p));
+    he.voies.forEach(v=>voies.add(v));
+  });
+  props.forEach(p=>{
+    const li = document.createElement('li');
+    li.textContent = p;
+    ul.appendChild(li);
+  });
+  document.getElementById('synergySummary').textContent = `Propriétés cumulées: ${Array.from(props).join(", ")} | Voies utilisées: ${Array.from(voies).join(", ")}`;
+}
+</script>
 
 </body>
 </html>
