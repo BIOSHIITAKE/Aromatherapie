@@ -18,9 +18,10 @@
   table {width:100%; border-collapse:collapse; margin-top:1rem;}
   th, td {border:1px solid #ddd; padding:0.5rem; text-align:center;}
   th {background:#f0f0f0;}
-  #melangeSection {margin-top:2rem;}
+  #melangeSection, #synergieSection {margin-top:2rem;}
   footer {background:#4b7362; color:white; text-align:center; padding:1rem; margin-top:3rem;}
   .btnSuppr {background:#c33;color:white;border:none;padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;}
+  .synergieBox {background:#e6f4ea; padding:1rem; border-radius:10px; margin-top:1rem;}
 </style>
 </head>
 <body>
@@ -30,8 +31,8 @@
 </header>
 
 <main>
+  <!-- Recherches et filtres -->
   <input type="text" id="searchInput" placeholder="🔍 Recherchez une molécule, une propriété ou une huile essentielle...">
-
   <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
     <select id="filterVoie">
       <option value="">Toutes les voies</option>
@@ -60,8 +61,10 @@
     </select>
   </div>
 
+  <!-- Résultats HE -->
   <div id="results" class="grid"></div>
 
+  <!-- Mélange sélectionné -->
   <section id="melangeSection">
     <h2>🧪 Mélange sélectionné</h2>
     <table id="melangeTable">
@@ -72,8 +75,17 @@
     </table>
   </section>
 
+  <!-- Calculateur de synergie -->
+  <section id="synergieSection">
+    <h2>⚗️ Synthèse moléculaire et propriétés cumulées</h2>
+    <div class="synergieBox" id="synergieBox">
+      <p>Aucune HE sélectionnée.</p>
+    </div>
+  </section>
+
+  <!-- Synthèse galénique -->
   <section id="galenique">
-    <h2>⚗️ Synthèse galénique et pharmaceutique</h2>
+    <h2>📋 Synthèse galénique et pharmaceutique</h2>
     <table>
       <tr><th>Voie / Cible</th><th>Objectif galénique</th><th>Formes recommandées</th><th>Excipients / vecteurs</th><th>Contraintes de stabilité</th><th>Références</th></tr>
       <tr><td>Orale systémique</td><td>Libération rapide ou prolongée</td><td>Gélules molles, micro-émulsions</td><td>TCM, lécithine, polysorbates</td><td>Oxydation, hydrolyse</td><td>Cimino (2021), Kaspute (2025)</td></tr>
@@ -115,7 +127,7 @@ const huiles = [
    indications:["Rétention d’eau","Douleurs articulaires"], voies:["Cutanée","Orale"], risques:["Insuffisance rénale"]}
 ];
 
-// --- Normalisation ---
+// --- Normalisation pour recherche ---
 function normalize(str){return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
 
 // --- Mélange sélectionné ---
@@ -159,12 +171,14 @@ function addToMelange(he){
   if(melange.includes(he)) return;
   melange.push(he);
   updateMelangeTable();
+  updateSynergie();
 }
 
 // --- Supprimer HE du mélange ---
 function removeFromMelange(index){
   melange.splice(index,1);
   updateMelangeTable();
+  updateSynergie();
 }
 
 // --- Mettre à jour tableau mélange ---
@@ -181,6 +195,32 @@ function updateMelangeTable(){
       <td><button class="btnSuppr" onclick="removeFromMelange(${i})">×</button></td>`;
     tbody.appendChild(tr);
   });
+}
+
+// --- Calculateur de synergie ---
+function updateSynergie(){
+  const box=document.getElementById('synergieBox');
+  if(melange.length===0){box.innerHTML='<p>Aucune HE sélectionnée.</p>';return;}
+
+  let molecules=[], proprietes=[], indications=[], voies=[];
+  melange.forEach(h=>{
+    molecules.push(...h.molecules);
+    proprietes.push(...h.proprietes);
+    indications.push(...h.indications);
+    voies.push(...h.voies);
+  });
+
+  // Supprimer doublons
+  molecules=[...new Set(molecules)];
+  proprietes=[...new Set(proprietes)];
+  indications=[...new Set(indications)];
+  voies=[...new Set(voies)];
+
+  box.innerHTML=`
+    <strong>Molécules cumulées :</strong> ${molecules.join(', ')}<br>
+    <strong>Propriétés cumulées :</strong> ${proprietes.join(', ')}<br>
+    <strong>Indications cumulées :</strong> ${indications.join(', ')}<br>
+    <strong>Voies cumulées :</strong> ${voies.join(', ')}`;
 }
 
 // --- Événements ---
