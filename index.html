@@ -152,7 +152,136 @@ function renderMelange() {
 
 document.getElementById("search").addEventListener("input", renderListe);
 renderListe();
-</script>
+</script><div class="galenique">
+  <style>
+  /* Styles encapsulés pour le module galénique */
+  .galenique {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #fafafa;
+    margin: 2em auto;
+    max-width: 1200px;
+    color: #222;
+    line-height: 1.5;
+    padding: 1em;
+  }
+  .galenique h1, .galenique h2, .galenique h3 {
+    color: #00695c;
+  }
+  .galenique table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2em;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .galenique th, .galenique td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+  }
+  .galenique th {
+    background-color: #e0f2f1;
+    color: #004d40;
+  }
+  .galenique tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+  .galenique code {
+    background: #f0f0f0;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  .galenique footer {
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 2em;
+  }
+  </style>
+
+  <h1>Galénique et Aromathérapie Scientifique</h1>
+  <p>
+    Cette section synthétise les correspondances entre <strong>voies d’administration</strong>, 
+    <strong>objectifs galéniques</strong>, <em>formes conseillées</em>, <em>excipients clés</em> et 
+    <em>critères de stabilité</em> pour les huiles essentielles et leurs principes actifs.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Voie / Cible</th>
+        <th>Objectif galénique</th>
+        <th>Formes recommandées</th>
+        <th>Excipients / vecteurs</th>
+        <th>Contraintes de stabilité</th>
+        <th>Références</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Orale systémique</strong></td>
+        <td>Libération rapide ou prolongée selon l’effet recherché (antimicrobien, relaxant, tonique).</td>
+        <td>Gélules molles, micro-émulsions buvables, liposomes, nanodispersions.</td>
+        <td>Triglycérides à chaîne moyenne (TCM), huiles végétales stables, lécithine, polysorbates, cyclodextrines.</td>
+        <td>Oxydation, hydrolyse acide, interaction avec sucs gastriques, précipitation, compatibilité excipient–molécule.</td>
+        <td>Cimino C. et al. (2021), Kaspute G. et al. (2025)</td>
+      </tr>
+      <tr>
+        <td><strong>Orale ciblée (intestinale / colon)</strong></td>
+        <td>Protection gastrique, libération retardée dans l’intestin.</td>
+        <td>Capsules gastro-résistantes, microcapsules entériques.</td>
+        <td>Polymères pH-dépendants (Eudragit®, cellulose modifiée), liposomes entériques, matrices à pH sensible.</td>
+        <td>Résistance à l’acidité, perméabilité intestinale, stabilité de la capsule.</td>
+        <td>Bolgen U.M.G. et al. (2025), Cimino C. et al. (2021)</td>
+      </tr>
+      <tr>
+        <td><strong>Cutanée (locale)</strong></td>
+        <td>Effet topique sans diffusion systémique marquée.</td>
+        <td>Crèmes, gels, pommades, micro-émulsions topiques.</td>
+        <td>Huiles végétales antioxydantes (jojoba, argan, sésame), lécithine, polysorbate 20, gélifiants naturels (xanthane, guar), cyclodextrines.</td>
+        <td>Oxydation, séparation de phase, irritation cutanée, compatibilité pH.</td>
+        <td>Nammas M. et al. (2024), Kaspute G. et al. (2025)</td>
+      </tr>
+      <tr>
+        <td><strong>Cutanée (transdermique)</strong></td>
+        <td>Diffusion prolongée à travers la peau, effet systémique.</td>
+        <td>Patchs aromatiques, nano-émulsions, systèmes matriciels.</td>
+        <td>Nanovecteurs lipidiques, adhésifs biocompatibles, promoteurs de perméation (limonène, eucalyptol), esters de cire.</td>
+        <td>Migration, décollement, évaporation, stabilité mécanique.</td>
+        <td>Kaspute G. et al. (2025)</td>
+      </tr>
+      <tr>
+        <td><strong>Respiratoire / muqueuse</strong></td>
+        <td>Action rapide sur les voies respiratoires ou muqueuses nasales.</td>
+        <td>Sprays liposomés, nébulisations isotoniques, aérosols micro-émulsifiés.</td>
+        <td>Solutions isotoniques, phospholipides (lécithine), cyclodextrines, tensioactifs doux.</td>
+        <td>Agrégation, pression / pulvérisation, irritation muqueuse, conservation microbiologique.</td>
+        <td>Zhou L. et al. (2024), Cimino C. et al. (2021)</td>
+      </tr>
+      <tr>
+        <td><strong>Diffusion atmosphérique (olfactive)</strong></td>
+        <td>Libération progressive dans l’air ambiant, effet olfactif et neurovégétatif.</td>
+        <td>Diffuseurs à froid, microcapsules volatiles, matrices polymériques parfumantes.</td>
+        <td>Substrats poreux (céramique, silice), polymères à libération lente, cyclodextrines, gels structurés.</td>
+        <td>Volatilité excessive, altération du polymère, interaction avec le diffuseur, changement de viscosité.</td>
+        <td>Zhou L. et al. (2024)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Références bibliographiques</h2>
+  <ul>
+    <li><strong>Cimino C. et al.</strong>, <em>Essential Oils: Pharmaceutical Applications and Delivery Strategies</em>, PMC8001530 (2021).</li>
+    <li><strong>Kaspute G. et al.</strong>, <em>Terpenes and Essential Oils in Pharmaceutics</em>, PMC12197171 (2025).</li>
+    <li><strong>Bolgen U.M.G. et al.</strong>, <em>Essential oil-based nanoemulsions with current knowledge</em>, <a href="https://www.sciencedirect.com/science/article/pii/S0926669025009574">ScienceDirect</a> (2025).</li>
+    <li><strong>Zhou L. et al.</strong>, <em>Cinnamon Essential Oil Delivery Systems</em>, Wiley FSN3.70814 (2024).</li>
+    <li><strong>Nammas M. et al.</strong>, <em>Systematic Review of Plant-Based Excipients in Topical Drug Delivery</em>, Thieme Connect (2024).</li>
+  </ul>
+
+  <footer>
+    <p>© 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5</p>
+  </footer>
+</div>
 
 </body>
 </html>
