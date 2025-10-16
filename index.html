@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aromathérapie Scientifique – Formulation Clinique & Galénique</title>
+<style>
+  body {font-family: system-ui, -apple-system, Roboto, Arial; margin:0; padding:0; background:#f8f9fa; color:#222;}
+  header {background:#005f56; color:white; padding:1rem; text-align:center;}
+  h1 {margin:0;}
+  main {padding:2rem;}
+  input, select {padding:0.6rem; border-radius:8px; border:1px solid #bbb; width:100%; max-width:400px;}
+  .grid {display:grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap:1rem; margin-top:1rem;}
+  .card {background:white; border:1px solid #ddd; border-radius:12px; padding:1rem; box-shadow:0 2px 5px rgba(0,0,0,0.05);}
+  .card h3 {margin:0 0 .2rem;}
+  .card small {color:#666;}
+  .card button {margin-top:0.5rem; background:#00897b; color:white; border:none; border-radius:8px; padding:0.5rem 1rem; cursor:pointer;}
+  .card button:hover {background:#00796b;}
+  table {width:100%; border-collapse:collapse; margin-top:1rem; background:white;}
+  th, td {border:1px solid #ccc; padding:0.5rem; text-align:center;}
+  th {background:#eee;}
+  .summary {margin-top:1rem; padding:1rem; background:white; border-radius:12px; border:1px solid #ddd;}
+  .galenique {margin-top:2rem; background:white; padding:1.5rem; border-radius:12px; border:1px solid #ddd;}
+  .galenique h2 {color:#005f56;}
+  footer {text-align:center; padding:1rem; color:#666; font-size:0.9rem;}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>🌿 Aromathérapie Scientifique</h1>
+  <p>Formulation clinique · Galénique · Recherche moléculaire</p>
+</header>
+
+<main>
+  <section>
+    <h2>🧪 Formulation clinique d'huiles essentielles</h2>
+    <input type="text" id="search" placeholder="Recherche par nom, molécule, propriété…">
+    <div id="listeHE" class="grid"></div>
+  </section>
+
+  <section>
+    <h2>🧩 Mélange sélectionné</h2>
+    <table id="melangeTable">
+      <thead>
+        <tr>
+          <th>HE</th>
+          <th>Molécules principales</th>
+          <th>Propriétés</th>
+          <th>Indications</th>
+          <th>Voies</th>
+          <th>Supprimer</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div class="summary" id="resume">
+      <strong>Résumé moléculaire et fonctionnel :</strong>
+      <div id="moleculesCumul"></div>
+      <div id="proprietesCumul"></div>
+    </div>
+  </section>
+
+  <section class="galenique">
+    <h2>⚗️ Galénique et Aromathérapie Scientifique</h2>
+    <p>Correspondances entre <strong>voies d’administration</strong>, <strong>objectifs galéniques</strong>, 
+       <em>formes conseillées</em>, <em>excipients clés</em> et <em>critères de stabilité</em>.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Voie / Cible</th>
+          <th>Objectif galénique</th>
+          <th>Formes recommandées</th>
+          <th>Excipients / vecteurs</th>
+          <th>Contraintes de stabilité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Orale</td>
+          <td>Libération rapide ou prolongée selon l’effet.</td>
+          <td>Gélules, microémulsions, liposomes.</td>
+          <td>TCM, huiles stables, polysorbates, cyclodextrines.</td>
+          <td>Oxydation, hydrolyse acide.</td>
+        </tr>
+        <tr>
+          <td>Cutanée</td>
+          <td>Effet topique localisé.</td>
+          <td>Crèmes, gels, patchs.</td>
+          <td>Huiles antioxydantes, lécithine, xanthane.</td>
+          <td>Oxydation, séparation de phase.</td>
+        </tr>
+        <tr>
+          <td>Diffusion</td>
+          <td>Effet olfactif neurovégétatif.</td>
+          <td>Diffuseurs à froid, microcapsules.</td>
+          <td>Cyclodextrines, polymères volatils.</td>
+          <td>Volatilité, altération du support.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  © 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5
+</footer>
+
+<script>
+// --- Données huiles essentielles ---
+const huiles = [
+  { nom:"Lavande vraie", latin:"Lavandula angustifolia", famille:"Lamiaceae",
+    molecules:["Linalol","Acétate de linalyle"],
+    proprietes:["Calmante","Antispasmodique","Régénératrice cutanée"],
+    indications:["Stress","Troubles du sommeil"], voies:["Cutanée","Olfactive"]
+  },
+  { nom:"Tea tree", latin:"Melaleuca alternifolia", famille:"Myrtaceae",
+    molecules:["Terpinène-4-ol","γ-Terpinène"],
+    proprietes:["Antibactérienne","Antifongique","Immunostimulante"],
+    indications:["Infections cutanées","Acné"], voies:["Cutanée","Diffusion"]
+  },
+  { nom:"Menthe poivrée", latin:"Mentha × piperita", famille:"Lamiaceae",
+    molecules:["Menthol","Menthone"],
+    proprietes:["Tonique","Digestive","Antalgique locale"],
+    indications:["Maux de tête","Troubles digestifs"], voies:["Cutanée","Orale diluée"]
+  },
+  { nom:"Citron", latin:"Citrus limon", famille:"Rutaceae",
+    molecules:["Limonène","β-pinène"],
+    proprietes:["Tonique","Dépurative","Antiseptique aérienne"],
+    indications:["Fatigue","Digestion"], voies:["Diffusion","Cutanée"]
+  },
+  { nom:"Ylang-ylang complète", latin:"Cananga odorata", famille:"Annonaceae",
+    molecules:["Germacrène D","Benzoate de benzyle"],
+    proprietes:["Relaxante","Hypotensive","Aphrodisiaque"],
+    indications:["Stress","Hypertension"], voies:["Cutanée","Diffusion"]
+  },
+  { nom:"Genévrier commun", latin:"Juniperus communis", famille:"Cupressaceae",
+    molecules:["α-pinène","Sabinène","Myrcène"],
+    proprietes:["Dépurative rénale","Antirhumatismale","Tonique circulatoire"],
+    indications:["Rétention d’eau","Goutte","Douleurs articulaires"], voies:["Cutanée","Orale (courte durée)"]
+  }
+];
+
+// --- Utilitaires de recherche accent-insensible ---
+function normaliser(txt) {
+  return txt.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+}
+
+let melange = [];
+
+function renderListe() {
+  const search = normaliser(document.getElementById("search").value);
+  const container = document.getElementById("listeHE");
+  container.innerHTML = "";
+  huiles.filter(h => normaliser(h.nom).includes(search)
+    || h.molecules.some(m => normaliser(m).includes(search))
+    || h.proprietes.some(p => normaliser(p).includes(search))
+    || h.indications.some(i => normaliser(i).includes(search)))
+  .forEach(h => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${h.nom}</h3>
+      <small><em>${h.latin}</em></small>
+      <p><strong>Famille :</strong> ${h.famille}</p>
+      <p><strong>Molécules :</strong> ${h.molecules.join(", ")}</p>
+      <p><strong>Propriétés :</strong> ${h.proprietes.join(", ")}</p>
+      <p><strong>Indications :</strong> ${h.indications.join(", ")}</p>
+      <p><strong>Voies :</strong> ${h.voies.join(", ")}</p>
+      <button onclick="ajouterMelange('${h.nom}')">Ajouter au mélange</button>`;
+    container.appendChild(card);
+  });
+}
+
+function ajouterMelange(nom) {
+  const he = huiles.find(h=>h.nom===nom);
+  if(!melange.includes(he)) melange.push(he);
+  renderMelange();
+}
+
+function supprimerHE(i) {
+  melange.splice(i,1);
+  renderMelange();
+}
+
+function renderMelange() {
+  const tbody = document.querySelector("#melangeTable tbody");
+  tbody.innerHTML = "";
+  let cumulMol = new Set(), cumulProp = new Set();
+  melange.forEach((h,i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${h.nom}</td>
+      <td>${h.molecules.join(", ")}</td>
+      <td>${h.proprietes.join(", ")}</td>
+      <td>${h.indications.join(", ")}</td>
+      <td>${h.voies.join(", ")}</td>
+      <td><button onclick="supprimerHE(${i})">❌</button></td>`;
+    tbody.appendChild(tr);
+    h.molecules.forEach(m=>cumulMol.add(m));
+    h.proprietes.forEach(p=>cumulProp.add(p));
+  });
+  document.getElementById("moleculesCumul").innerText = "Molécules présentes : " + Array.from(cumulMol).join(", ");
+  document.getElementById("proprietesCumul").innerText = "Propriétés combinées : " + Array.from(cumulProp).join(", ");
+}
+
+document.getElementById("search").addEventListener("input", renderListe);
+renderListe();
+</script>
+</body>
+</html>
