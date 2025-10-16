@@ -5,27 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aromathérapie scientifique – Formulation galénique interactive</title>
 <style>
-  body {font-family: 'Segoe UI', Roboto, sans-serif; background:#fafafa; margin:0; padding:0; color:#222;}
+  body {font-family:'Segoe UI', Roboto, sans-serif; background:#fafafa; margin:0; padding:0; color:#222;}
   header {background:#4b7362; color:white; text-align:center; padding:1.5rem 1rem;}
   h1 {margin:0; font-size:1.8rem;}
   main {max-width:1100px; margin:2rem auto; padding:1rem;}
   input, select {padding:0.6rem; font-size:1rem; border:1px solid #ccc; border-radius:8px; width:100%; margin-bottom:1rem;}
   .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem;}
-  .card {background:white; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1rem; transition:transform 0.2s;}
+  .card {background:white; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1rem; transition:transform 0.2s; cursor:pointer;}
   .card:hover {transform:scale(1.02);}
-  .card h3 {margin-top:0;}
   .props span {background:#e6f4ea; padding:3px 7px; margin:2px; border-radius:5px; display:inline-block;}
   #results {margin-top:2rem;}
   table {width:100%; border-collapse:collapse; margin-top:1rem;}
-  th, td {border:1px solid #ddd; padding:0.5rem;}
+  th, td {border:1px solid #ddd; padding:0.5rem; text-align:center;}
   th {background:#f0f0f0;}
+  #melangeSection {margin-top:2rem;}
   footer {background:#4b7362; color:white; text-align:center; padding:1rem; margin-top:3rem;}
+  .btnSuppr {background:#c33;color:white;border:none;padding:0.2rem 0.5rem;border-radius:4px;cursor:pointer;}
 </style>
 </head>
 <body>
 <header>
   <h1>🌿 Aromathérapie scientifique – Formulation galénique interactive</h1>
-  <p>Recherche par molécule, filtrez par voie, indication ou risques</p>
+  <p>Recherchez, sélectionnez vos HE et créez votre mélange personnalisé</p>
 </header>
 
 <main>
@@ -60,6 +61,16 @@
   </div>
 
   <div id="results" class="grid"></div>
+
+  <section id="melangeSection">
+    <h2>🧪 Mélange sélectionné</h2>
+    <table id="melangeTable">
+      <thead>
+        <tr><th>HE</th><th>Molécules principales</th><th>Propriétés</th><th>Indications</th><th>Voies</th><th>Supprimer</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
 
   <section id="galenique">
     <h2>⚗️ Synthèse galénique et pharmaceutique</h2>
@@ -104,10 +115,13 @@ const huiles = [
    indications:["Rétention d’eau","Douleurs articulaires"], voies:["Cutanée","Orale"], risques:["Insuffisance rénale"]}
 ];
 
-// --- Normalisation des accents ---
+// --- Normalisation ---
 function normalize(str){return str.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();}
 
-// --- Filtrage dynamique ---
+// --- Mélange sélectionné ---
+let melange = [];
+
+// --- Filtrage HE ---
 function filterResults(){
   const query=normalize(document.getElementById('searchInput').value);
   const voie=document.getElementById('filterVoie').value;
@@ -135,7 +149,37 @@ function filterResults(){
       <strong>Indications :</strong> ${h.indications.join(', ')}<br>
       <strong>Voies :</strong> ${h.voies.join(', ')}<br>
       <strong>Risques :</strong> ${h.risques.join(', ')}`;
+    card.addEventListener('click',()=>addToMelange(h));
     container.appendChild(card);
+  });
+}
+
+// --- Ajouter HE au mélange ---
+function addToMelange(he){
+  if(melange.includes(he)) return;
+  melange.push(he);
+  updateMelangeTable();
+}
+
+// --- Supprimer HE du mélange ---
+function removeFromMelange(index){
+  melange.splice(index,1);
+  updateMelangeTable();
+}
+
+// --- Mettre à jour tableau mélange ---
+function updateMelangeTable(){
+  const tbody=document.querySelector('#melangeTable tbody');
+  tbody.innerHTML='';
+  melange.forEach((h,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${h.nom}</td>
+      <td>${h.molecules.join(', ')}</td>
+      <td>${h.proprietes.join(', ')}</td>
+      <td>${h.indications.join(', ')}</td>
+      <td>${h.voies.join(', ')}</td>
+      <td><button class="btnSuppr" onclick="removeFromMelange(${i})">×</button></td>`;
+    tbody.appendChild(tr);
   });
 }
 
