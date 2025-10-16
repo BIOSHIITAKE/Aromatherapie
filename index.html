@@ -1,213 +1,446 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Formulation Clinique Galénique – Aromathérapie Scientifique</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Index · Formulation Clinique & Galénique — Aromathérapie Scientifique</title>
 <style>
-body {
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: #fdfdfd;
-  margin: 0;
-  padding: 0;
-  color: #222;
-  line-height: 1.5;
-}
-header {
-  background: linear-gradient(120deg, #00695c, #004d40);
-  color: white;
-  padding: 1.5em;
-  text-align: center;
-}
-h1 { margin: 0; font-size: 1.8em; }
-h2 { color: #00695c; margin-top: 1.5em; }
-.container {
-  padding: 2em;
-  max-width: 1200px;
-  margin: auto;
-}
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 1em 1.5em;
-  margin-bottom: 1em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-button {
-  background: #00897b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5em 1em;
-  cursor: pointer;
-}
-button:hover {
-  background: #00695c;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-top: 1em;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  vertical-align: top;
-}
-th {
-  background-color: #e0f2f1;
-  color: #004d40;
-}
-tr:nth-child(even) { background-color: #fafafa; }
-footer {
-  text-align: center;
-  padding: 1em;
-  font-size: 0.9em;
-  color: #666;
-  background: #f1f1f1;
-  margin-top: 2em;
-}
+  /* ===========================
+     Style général
+     =========================== */
+  :root{
+    --accent:#00695c; --accent-dark:#004d40; --muted:#667; --card:#fff;
+    --safe:#dff0d8; --warn:#fff4ce; --danger:#fde2e2;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:#f6f7f8; color:#222; line-height:1.45}
+  header{background:linear-gradient(120deg,var(--accent),var(--accent-dark)); color:#fff; padding:1.2rem; text-align:center}
+  header h1{margin:.1rem 0; font-size:1.35rem}
+  header p{margin:.3rem 0 .1rem; opacity:.95}
+  .wrap{max-width:1200px; margin:1rem auto; padding:0 1rem}
+  .grid-two{display:grid; grid-template-columns: 1fr 360px; gap:1rem}
+  @media(max-width:980px){.grid-two{grid-template-columns:1fr}}
+  .card{background:var(--card); border-radius:10px; padding:1rem; box-shadow:0 6px 18px rgba(18,36,30,.04); border:1px solid #e9eef0}
+  h2{color:var(--accent); margin:0 0 .6rem}
+  .muted{color:var(--muted); font-size:.95rem}
+  input[type="text"], select {width:100%; padding:.55rem .6rem; border-radius:8px; border:1px solid #cfd8d8}
+  .controls{display:flex; gap:.5rem; align-items:center; margin-bottom:.6rem; flex-wrap:wrap}
+  .controls label{font-size:.9rem; color:var(--muted)}
+  .filter-row{display:flex; gap:.6rem; flex-wrap:wrap; margin:.6rem 0}
+  .pill{display:inline-block;padding:.28rem .5rem;border-radius:999px;background:#eef7f3;color:var(--accent); font-weight:700; border:1px solid #e0f0ea; cursor:pointer}
+  .pill.active{box-shadow:inset 0 -2px 0 rgba(0,0,0,.03)}
+  /* HE list */
+  .he-list{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:.8rem}
+  .he-item{padding:.6rem;border-radius:8px;border:1px solid #e6ecec;background:#fff}
+  .he-item h3{margin:.2rem 0 .2rem;font-size:1rem}
+  .he-item .meta{font-size:.87rem;color:var(--muted)}
+  .add-btn{display:inline-block;margin-top:.5rem;padding:.45rem .6rem;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+  .add-btn:active{transform:translateY(1px)}
+  /* Mix table */
+  table{width:100%;border-collapse:collapse;margin-top:.6rem}
+  th,td{border:1px solid #e6ecec;padding:.5rem;text-align:left;font-size:.95rem}
+  th{background:#f0fbf9;color:var(--accent);}
+  .smallbtn{background:#f3f3f3;border:1px solid #e0e0e0;padding:.25rem .4rem;border-radius:6px;cursor:pointer}
+  /* Detail panel */
+  .detail h3{margin:.1rem 0 .3rem}
+  .tags{display:flex;gap:.4rem;flex-wrap:wrap;margin:.5rem 0}
+  .tag{padding:.25rem .46rem;border-radius:8px;background:#f2f7f5;color:var(--accent-dark);font-weight:700;font-size:.86rem}
+  .risk.safe{background:var(--safe);color:#0b5a29;border:1px solid #cfe8cf}
+  .risk.warn{background:var(--warn);color:#6e4b00;border:1px solid #f0da9a}
+  .risk.danger{background:var(--danger);color:#7a1717;border:1px solid #f5c6c6}
+  /* Galénique table */
+  .gal-table th, .gal-table td{font-size:.92rem}
+  /* Export JSON */
+  .tools{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-top:.5rem}
+  .download{background:#004d40;color:#fff;padding:.45rem .7rem;border-radius:8px;border:0;cursor:pointer}
+  footer{margin:2rem 0 .8rem;color:var(--muted);text-align:center;font-size:.9rem}
+  /* small responsive */
+  @media(max-width:600px){
+    header h1{font-size:1.1rem}
+  }
 </style>
 </head>
-
 <body>
+
 <header>
-  <h1>🧪 Formulation Clinique & Galénique – Aromathérapie Scientifique</h1>
-  <p>Recherche par nom, molécules, propriétés…</p>
+  <h1>Formulation Clinique · Galénique</h1>
+  <p>Choisis une molécule, affine par risques / utilisateurs / voie — obtiens des conseils cliniques.</p>
 </header>
 
-<div class="container">
+<div class="wrap">
 
-<!-- --- HUILES ESSENTIELLES --- -->
-<div class="card">
-  <h2>Lavande vraie (<em>Lavandula angustifolia</em>) – Lamiaceae</h2>
-  <p><strong>Molécules :</strong> Linalol (35 %), Acétate de linalyle (40 %)</p>
-  <p><strong>Propriétés :</strong> Calmante, antispasmodique, régénératrice cutanée</p>
-  <p><strong>Indications :</strong> Stress, troubles du sommeil</p>
-  <p><strong>Voies :</strong> Cutanée, olfactive</p>
-  <button onclick="ajouterHE('Lavande vraie', 'Linalol (35%), Acétate de linalyle (40%)', 'Calmante, Antispasmodique, Régénératrice cutanée', 'Stress, Troubles du sommeil', 'Voie cutanée, Voie olfactive')">Ajouter au mélange</button>
+  <!-- Top area: search + filters + HE list -->
+  <section class="grid-two">
+
+    <!-- Left: main interactive area -->
+    <div class="card">
+
+      <h2 id="formulation">Recherche & filtres</h2>
+
+      <div class="controls">
+        <label for="molSearch" class="muted">Molécule</label>
+        <input id="molSearch" type="text" placeholder="Commence à taper une molécule (ex: linalol, limonène)"/>
+      </div>
+
+      <div class="filter-row">
+        <div>
+          <div class="muted">Risques à exclure</div>
+          <label><input type="checkbox" class="exclude-risk" value="pregnancy"/> Risque grossesse</label><br>
+          <label><input type="checkbox" class="exclude-risk" value="renal"/> Risque insuffisance rénale</label><br>
+          <label><input type="checkbox" class="exclude-risk" value="photosens"/> Photosensibilisant</label><br>
+          <label><input type="checkbox" class="exclude-risk" value="neuro"/> Neurotoxicité</label>
+        </div>
+
+        <div>
+          <div class="muted">Utilisateurs autorisés (exclure si non autorisé)</div>
+          <label><input type="checkbox" class="exclude-user" value="pregnant"/> Femmes enceintes</label><br>
+          <label><input type="checkbox" class="exclude-user" value="children"/> Enfants (<7 ans)</label><br>
+          <label><input type="checkbox" class="exclude-user" value="elderly"/> Personnes âgées</label>
+        </div>
+
+        <div>
+          <div class="muted">Voies d'utilisation</div>
+          <label><input type="checkbox" class="filter-voie" value="cutanee"/> Cutanée</label><br>
+          <label><input type="checkbox" class="filter-voie" value="orale"/> Orale</label><br>
+          <label><input type="checkbox" class="filter-voie" value="diffusion"/> Diffusion</label><br>
+          <label><input type="checkbox" class="filter-voie" value="inhalation"/> Inhalation</label>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:.5rem;align-items:center;justify-content:space-between;margin-top:.6rem">
+        <div class="muted">Résultats (dynamiques)</div>
+        <div class="tools">
+          <button class="smallbtn" id="resetFilters">Réinitialiser filtres</button>
+          <button class="download" id="exportJSON">Exporter mix (JSON)</button>
+        </div>
+      </div>
+
+      <div id="heResults" style="margin-top:.8rem" class="he-list">
+        <!-- HE cards injected here -->
+      </div>
+
+    </div>
+
+    <!-- Right: detail & mélange -->
+    <aside>
+
+      <div class="card detail" id="detailCard" aria-live="polite">
+        <h3>Fiche détaillée</h3>
+        <div id="detailContent" class="muted">Clique sur une huile ou une molécule pour voir les détails ici.</div>
+      </div>
+
+      <div class="card">
+        <h3>Mélange sélectionné</h3>
+        <table id="mixTable">
+          <thead><tr><th>HE</th><th>Voies</th><th>Suppr</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="summary" style="margin-top:.6rem">
+          <strong>Résumé molécules cumulées :</strong>
+          <div id="mixMolecules" class="muted">—</div>
+          <strong style="display:block;margin-top:.4rem">Propriétés cumulées :</strong>
+          <div id="mixProps" class="muted">—</div>
+        </div>
+      </div>
+
+    </aside>
+
+  </section>
+
+  <!-- GALÉNIQUE + infos complètes -->
+  <section style="margin-top:1rem" class="card">
+    <h2 id="galenique">Galénique & Références</h2>
+    <p class="muted">Synthèse : choix de la forme galénique selon la voie, excipients recommandés et contraintes de stabilité.</p>
+
+    <table class="gal-table" style="margin-top:.6rem">
+      <thead>
+        <tr>
+          <th>Voie / Cible</th><th>Objectif</th><th>Formes</th><th>Excipients</th><th>Contraintes</th><th>Références</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Orale systémique</td><td>Libération rapide/prolongée</td><td>Gélules molles, micro-émulsions</td><td>TCM, lécithine, cyclodextrines</td><td>Oxydation, hydrolyse</td><td>Cimino (2021)</td></tr>
+        <tr><td>Orale ciblée</td><td>Protection gastrique</td><td>Enrobage entérique, microcapsules</td><td>Eudragit®, HPMC</td><td>Résistance acidité</td><td>Bolgen (2025)</td></tr>
+        <tr><td>Cutanée (locale)</td><td>Topique</td><td>Crèmes, gels, micro-émulsions</td><td>Huiles porteuses antioxydantes, xanthane</td><td>Séparation de phase, oxydation</td><td>Nammas (2024)</td></tr>
+        <tr><td>Transdermique</td><td>Diffusion prolongée</td><td>Patch, matrices</td><td>Adhésifs, promoteurs de perméation</td><td>Migration, évaporation</td><td>Kaspute (2025)</td></tr>
+        <tr><td>Respiratoire / muqueuse</td><td>Action locale rapide</td><td>Sprays liposomés, nébulisation</td><td>Solutions isotoniques, phospholipides</td><td>Irritation muqueuse, conservation</td><td>Zhou (2024)</td></tr>
+        <tr><td>Diffusion olfactive</td><td>Libération progressive</td><td>Diffuseurs à froid, microcapsules</td><td>Cyclodextrines, gels</td><td>Volatilité</td><td>Zhou (2024)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:.8rem">Références</h3>
+    <ul class="muted">
+      <li>Cimino C. et al., <em>Essential Oils: Pharmaceutical Applications and Delivery Strategies</em>, PMC8001530 (2021).</li>
+      <li>Kaspute G., <em>Terpenes and Essential Oils in Pharmaceutics</em>, PMC12197171 (2025).</li>
+      <li>Bolgen U.M.G., <em>Essential oil-based nanoemulsions</em>, ScienceDirect (2025).</li>
+      <li>Zhou L. et al., <em>Cinnamon Essential Oil Delivery Systems</em>, Wiley (2024).</li>
+      <li>Nammas M., <em>Plant-Based Excipients for Topical Delivery</em>, Thieme (2024).</li>
+    </ul>
+  </section>
+
 </div>
 
-<div class="card">
-  <h2>Tea tree (<em>Melaleuca alternifolia</em>) – Myrtaceae</h2>
-  <p><strong>Molécules :</strong> Terpinène-4-ol (40 %), γ-Terpinène (20 %)</p>
-  <p><strong>Propriétés :</strong> Antibactérienne, antifongique, immunostimulante</p>
-  <p><strong>Indications :</strong> Infections cutanées, acné</p>
-  <p><strong>Voies :</strong> Cutanée, diffusion</p>
-  <button onclick="ajouterHE('Tea tree', 'Terpinène-4-ol (40%), γ-Terpinène (20%)', 'Antibactérienne, Antifongique, Immunostimulante', 'Infections cutanées, Acné', 'Voie cutanée, Diffusion')">Ajouter au mélange</button>
-</div>
-
-<div class="card">
-  <h2>Menthe poivrée (<em>Mentha × piperita</em>) – Lamiaceae</h2>
-  <p><strong>Molécules :</strong> Menthol (40 %), Menthone (20 %)</p>
-  <p><strong>Propriétés :</strong> Tonique, digestive, antalgique locale</p>
-  <p><strong>Indications :</strong> Maux de tête, troubles digestifs</p>
-  <p><strong>Voies :</strong> Cutanée, orale diluée</p>
-  <button onclick="ajouterHE('Menthe poivrée', 'Menthol (40%), Menthone (20%)', 'Tonique, Digestive, Antalgique locale', 'Maux de tête, Troubles digestifs', 'Voie cutanée, Voie orale diluée')">Ajouter au mélange</button>
-</div>
-
-<div class="card">
-  <h2>Citron (<em>Citrus limon</em>) – Rutaceae</h2>
-  <p><strong>Molécules :</strong> Limonène (65 %), β-pinène (10 %)</p>
-  <p><strong>Propriétés :</strong> Tonique, dépurative, antiseptique aérienne</p>
-  <p><strong>Indications :</strong> Fatigue, troubles digestifs</p>
-  <p><strong>Voies :</strong> Diffusion, cutanée</p>
-  <button onclick="ajouterHE('Citron', 'Limonène (65%), β-pinène (10%)', 'Tonique, Dépurative, Antiseptique aérienne', 'Fatigue, Digestif', 'Diffusion, Voie cutanée')">Ajouter au mélange</button>
-</div>
-
-<div class="card">
-  <h2>Ylang-ylang complète (<em>Cananga odorata</em>) – Annonaceae</h2>
-  <p><strong>Molécules :</strong> Germacrène D (15 %), Benzoate de benzyle (10 %)</p>
-  <p><strong>Propriétés :</strong> Relaxante, hypotensive, aphrodisiaque</p>
-  <p><strong>Indications :</strong> Stress, hypertension</p>
-  <p><strong>Voies :</strong> Cutanée, diffusion</p>
-  <button onclick="ajouterHE('Ylang-ylang complète', 'Germacrène D (15%), Benzoate de benzyle (10%)', 'Relaxante, Hypotensive, Aphrodisiaque', 'Stress, Hypertension', 'Voie cutanée, Diffusion')">Ajouter au mélange</button>
-</div>
-
-<!-- --- TABLEAU DE MÉLANGE --- -->
-<h2>Mélange sélectionné</h2>
-<table id="melangeTable">
-  <thead>
-    <tr>
-      <th>HE</th>
-      <th>Molécules principales</th>
-      <th>Propriétés</th>
-      <th>Indications</th>
-      <th>Voie d'utilisation</th>
-      <th>Supprimer</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
-<h3>Résumé des molécules cumulées et propriétés :</h3>
-<div id="resume"></div>
-
-<!-- --- SECTION GALÉNIQUE --- -->
-<h2>Galénique et Aromathérapie Scientifique</h2>
-<p>
-Cette section synthétise les correspondances entre voies d’administration, objectifs galéniques,
-formes conseillées, excipients clés et critères de stabilité pour les huiles essentielles et leurs principes actifs.
-</p>
-
-<table>
-<thead>
-<tr>
-<th>Voie / Cible</th><th>Objectif galénique</th><th>Formes recommandées</th><th>Excipients / vecteurs</th><th>Contraintes de stabilité</th><th>Références</th>
-</tr>
-</thead>
-<tbody>
-<tr><td>Orale systémique</td><td>Libération rapide ou prolongée selon l’effet recherché.</td><td>Gélules molles, micro-émulsions buvables, liposomes.</td><td>TCM, huiles stables, lécithine, cyclodextrines.</td><td>Oxydation, hydrolyse, compatibilité excipient–molécule.</td><td>Cimino (2021), Kaspute (2025)</td></tr>
-<tr><td>Orale ciblée (intestinale / colon)</td><td>Protection gastrique, libération retardée.</td><td>Capsules gastro-résistantes, microcapsules entériques.</td><td>Polymères pH-dépendants, matrices sensibles.</td><td>Résistance à l’acidité, stabilité capsule.</td><td>Bolgen (2025), Cimino (2021)</td></tr>
-<tr><td>Cutanée (locale)</td><td>Effet topique sans diffusion systémique.</td><td>Crèmes, gels, micro-émulsions.</td><td>Huiles antioxydantes, lécithine, polysorbate, gélifiants naturels.</td><td>Oxydation, séparation, compatibilité pH.</td><td>Nammas (2024), Kaspute (2025)</td></tr>
-<tr><td>Cutanée (transdermique)</td><td>Diffusion prolongée à travers la peau.</td><td>Patchs, nano-émulsions, systèmes matriciels.</td><td>Nanovecteurs, adhésifs, promoteurs de perméation.</td><td>Migration, évaporation, stabilité mécanique.</td><td>Kaspute (2025)</td></tr>
-<tr><td>Respiratoire / muqueuse</td><td>Action rapide sur voies respiratoires.</td><td>Sprays liposomés, nébulisations, aérosols.</td><td>Solutions isotoniques, phospholipides, tensioactifs doux.</td><td>Irritation, conservation microbiologique.</td><td>Zhou (2024), Cimino (2021)</td></tr>
-<tr><td>Diffusion atmosphérique</td><td>Libération progressive, effet olfactif.</td><td>Diffuseurs à froid, microcapsules, polymères parfumants.</td><td>Substrats poreux, cyclodextrines, gels structurés.</td><td>Volatilité, altération du polymère.</td><td>Zhou (2024)</td></tr>
-</tbody>
-</table>
-
-<h2>Références bibliographiques</h2>
-<ul>
-<li><strong>Cimino C. et al.</strong>, <em>Essential Oils: Pharmaceutical Applications and Delivery Strategies</em>, PMC8001530 (2021).</li>
-<li><strong>Kaspute G. et al.</strong>, <em>Terpenes and Essential Oils in Pharmaceutics</em>, PMC12197171 (2025).</li>
-<li><strong>Bolgen U.M.G. et al.</strong>, <em>Essential oil-based nanoemulsions with current knowledge</em>, ScienceDirect (2025).</li>
-<li><strong>Zhou L. et al.</strong>, <em>Cinnamon Essential Oil Delivery Systems</em>, Wiley FSN3.70814 (2024).</li>
-<li><strong>Nammas M. et al.</strong>, <em>Systematic Review of Plant-Based Excipients in Topical Drug Delivery</em>, Thieme Connect (2024).</li>
-</ul>
-
-</div>
-
-<footer>
-<p>© 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5</p>
-</footer>
+<footer>© 2025 – Laurent Aromathérapie scientifique · Collaboration technique : GPT-5</footer>
 
 <script>
-function ajouterHE(nom, molecules, proprietes, indications, voies) {
-  const tbody = document.querySelector("#melangeTable tbody");
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${nom}</td>
-    <td>${molecules}</td>
-    <td>${proprietes}</td>
-    <td>${indications}</td>
-    <td>${voies}</td>
-    <td><button onclick="this.closest('tr').remove(); mettreAJourResume();">🗑️</button></td>
-  `;
-  tbody.appendChild(row);
-  mettreAJourResume();
+/* ===========================
+   Données embarquées (6 HE)
+   =========================== */
+const HE_DB = [
+  {
+    id: "lavande",
+    nom: "Lavande vraie",
+    latin: "Lavandula angustifolia",
+    famille: "Lamiaceae",
+    molecules: [{n:"Linalol",p:35},{n:"Acétate de linalyle",p:40}],
+    proprietes: ["Calmante","Antispasmodique","Régénératrice cutanée"],
+    indications: ["Stress","Troubles du sommeil"],
+    voies: {cutanee:true, orale:false, diffusion:true, inhalation:true},
+    risks: {pregnancy:false, renal:false, photosens:false, neuro:false, allergen:false},
+    notes: "Usage topique et olfactif habituel; posologies classiques."
+  },
+  {
+    id: "tea",
+    nom: "Tea tree",
+    latin: "Melaleuca alternifolia",
+    famille: "Myrtaceae",
+    molecules: [{n:"Terpinène-4-ol",p:40},{n:"γ-Terpinène",p:20}],
+    proprietes: ["Antibactérienne","Antifongique","Immunostimulante"],
+    indications: ["Infections cutanées","Acné"],
+    voies: {cutanee:true, orale:false, diffusion:true, inhalation:true},
+    risks: {pregnancy:false, renal:false, photosens:false, neuro:false, allergen:true},
+    notes: "Ne pas avaler pur; usage cutané dilué recommandé."
+  },
+  {
+    id: "menthe",
+    nom: "Menthe poivrée",
+    latin: "Mentha × piperita",
+    famille: "Lamiaceae",
+    molecules: [{n:"Menthol",p:40},{n:"Menthone",p:20}],
+    proprietes: ["Tonique","Digestive","Antalgique locale"],
+    indications: ["Maux de tête","Troubles digestifs"],
+    voies: {cutanee:true, orale:true, diffusion:false, inhalation:true},
+    risks: {pregnancy:true, renal:false, photosens:false, neuro:false, allergen:false},
+    notes: "Éviter usage oral/fort chez jeunes enfants; prudence grossesse."
+  },
+  {
+    id: "citron",
+    nom: "Citron",
+    latin: "Citrus limon",
+    famille: "Rutaceae",
+    molecules: [{n:"Limonène",p:65},{n:"β-pinène",p:10}],
+    proprietes: ["Tonique","Dépurative","Antiseptique aérienne"],
+    indications: ["Fatigue","Digestif"],
+    voies: {cutanee:true, orale:true, diffusion:true, inhalation:true},
+    risks: {pregnancy:false, renal:false, photosens:true, neuro:false, allergen:false},
+    notes: "Photosensibilisant : éviter exposition solaire après application cutanée."
+  },
+  {
+    id: "ylang",
+    nom: "Ylang-ylang complète",
+    latin: "Cananga odorata",
+    famille: "Annonaceae",
+    molecules: [{n:"Germacrène D",p:15},{n:"Benzoate de benzyle",p:10}],
+    proprietes: ["Relaxante","Hypotensive","Aphrodisiaque"],
+    indications: ["Stress","Hypertension"],
+    voies: {cutanee:true, orale:false, diffusion:true, inhalation:true},
+    risks: {pregnancy:true, renal:false, photosens:false, neuro:false, allergen:false},
+    notes: "Usage olfactif apprécié; prudence en cas d'hypotension sévère."
+  },
+  {
+    id: "juniperus",
+    nom: "Genévrier commun (baies)",
+    latin: "Juniperus communis",
+    famille: "Cupressacées",
+    molecules: [{n:"α-pinène"},{n:"sabinène"},{n:"myrcène",p:"15-20"},{n:"germacrène"},{n:"β-caryophyllène"},{n:"terpinène-4-ol",p:"2-3"}],
+    proprietes: ["Anti-inflammatoire","Cholagogue/Choléretique","Anti-infectieuse"],
+    indications: ["Troubles digestifs","Troubles articulaires (usage externe)"],
+    voies: {cutanee:true, orale:true, diffusion:true, inhalation:false},
+    risks: {pregnancy:true, renal:true, photosens:false, neuro:false, allergen:false},
+    notes: "Éviter pendant grossesse et en cas d'insuffisance rénale ; per os uniquement court et sous surveillance médicale."
+  }
+];
+
+/* ===========================
+   Utilities & rendering
+   =========================== */
+
+const heResults = document.getElementById('heResults');
+const molInput = document.getElementById('molSearch');
+const mixTableBody = document.querySelector('#mixTable tbody');
+const mixMoleculesDiv = document.getElementById('mixMolecules');
+const mixPropsDiv = document.getElementById('mixProps');
+const detailContent = document.getElementById('detailContent');
+
+let MIX = []; // selected HE ids
+
+function candidateMolecules(){
+  // unique molecule names for autocomplete
+  const set = new Set();
+  HE_DB.forEach(h => h.molecules.forEach(m => set.add((m.n||m).toString())));
+  return Array.from(set).sort((a,b)=>a.localeCompare(b,'fr'));
 }
-function mettreAJourResume() {
-  const rows = document.querySelectorAll("#melangeTable tbody tr");
-  let molecules = [], proprietes = [];
-  rows.forEach(row => {
-    molecules.push(row.cells[1].textContent);
-    proprietes.push(row.cells[2].textContent);
+const MOL_CAND = candidateMolecules();
+
+/* Simple autocompletion */
+molInput.addEventListener('input', e=>{
+  const q = e.target.value.trim().toLowerCase();
+  // no dropdown UI: we just re-filter on input
+  renderResults();
+});
+
+/* Filter extraction helpers */
+function getSelectedExcludeRisks(){
+  return Array.from(document.querySelectorAll('.exclude-risk:checked')).map(i=>i.value);
+}
+function getSelectedExcludeUsers(){
+  return Array.from(document.querySelectorAll('.exclude-user:checked')).map(i=>i.value);
+}
+function getSelectedVoies(){
+  return Array.from(document.querySelectorAll('.filter-voie:checked')).map(i=>i.value);
+}
+
+document.getElementById('resetFilters').addEventListener('click', ()=>{
+  document.querySelectorAll('.exclude-risk, .exclude-user, .filter-voie').forEach(cb=>cb.checked=false);
+  molInput.value = '';
+  renderResults();
+});
+
+/* Export mix JSON */
+document.getElementById('exportJSON').addEventListener('click', ()=>{
+  if(MIX.length===0){ alert("Aucun HE dans le mélange — ajoutez au moins une HE."); return; }
+  const data = MIX.map(id => HE_DB.find(h=>h.id===id));
+  const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'melange_he.json'; document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* Render HE cards according to filters */
+function renderResults(){
+  const qMol = molInput.value.trim().toLowerCase();
+  const excludeRisks = getSelectedExcludeRisks();
+  const excludeUsers = getSelectedExcludeUsers();
+  const selectedVoies = getSelectedVoies();
+
+  heResults.innerHTML = '';
+  HE_DB.forEach(h=>{
+    // molecule filter: if qMol not empty, match any molecule names containing q
+    const molNames = h.molecules.map(m=> (m.n||m).toString().toLowerCase());
+    if(qMol && !molNames.some(mn => mn.includes(qMol))) return;
+
+    // exclude risks: if any selected exclude risk is present in HE (true => exclude)
+    let skip=false;
+    excludeRisks.forEach(r=>{
+      if(r in h.risks && h.risks[r]) skip=true;
+    });
+    if(skip) return;
+
+    // exclude users: map to same risk flags
+    excludeUsers.forEach(u=>{
+      if(u==='pregnant' && h.risks.pregnancy) skip=true;
+      if(u==='children' && (h.id==='menthe' || (h.risks && h.risks.neuro))) skip=true; // simple heuristic
+      if(u==='elderly' && false) skip=false;
+    });
+    if(skip) return;
+
+    // voies filter (if any selected, require at least one match)
+    if(selectedVoies.length>0){
+      const map = {cutanee:'cutanee', orale:'orale', diffusion:'diffusion', inhalation:'inhalation'};
+      const has = selectedVoies.some(v => !!h.voies[map[v]]);
+      if(!has) return;
+    }
+
+    // Build card
+    const card = document.createElement('div');
+    card.className = 'he-item';
+    let mols = h.molecules.map(m => (m.n||m).toString() + (m.p ? ` (${m.p}%)` : '')).join(', ');
+    card.innerHTML = `<h3>${h.nom}</h3>
+      <div class="meta"><em>${h.latin}</em> — ${h.famille}</div>
+      <div class="muted" style="margin:.45rem 0"><strong>Molécules:</strong> ${mols}</div>
+      <div class="muted"><strong>Propriétés:</strong> ${h.proprietes.join(', ')}</div>
+      <div style="margin-top:.6rem;display:flex;gap:.4rem;align-items:center">
+        <button class="add-btn" data-id="${h.id}">Ajouter au mélange</button>
+        <button class="smallbtn" data-view="${h.id}">Voir fiche</button>
+      </div>`;
+    heResults.appendChild(card);
   });
-  document.getElementById("resume").innerHTML =
-    `<strong>Molécules :</strong> ${molecules.join(", ")}<br><strong>Propriétés :</strong> ${proprietes.join(", ")}`;
+
+  // Attach events for add/view
+  document.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.onclick = (e)=>{ ajouterAuMix(e.target.dataset.id); };
+  });
+  document.querySelectorAll('.smallbtn[data-view]').forEach(b=>{
+    b.onclick = (e)=>{ showDetail(e.target.dataset.view); };
+  });
 }
+
+/* Add to MIX */
+function ajouterAuMix(id){
+  if(MIX.includes(id)) return alert("Déjà dans le mélange.");
+  MIX.push(id);
+  renderMix();
+}
+
+/* Render mix table & summary */
+function renderMix(){
+  mixTableBody.innerHTML = '';
+  let cumulM = {}; let cumulP = new Set();
+  MIX.forEach((id, idx)=>{
+    const h = HE_DB.find(x=>x.id===id);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${h.nom}</td><td>${Object.keys(h.voies).filter(v=>h.voies[v]).join(', ')}</td><td><button class="smallbtn" data-idx="${idx}">❌</button></td>`;
+    mixTableBody.appendChild(tr);
+    // molecules
+    h.molecules.forEach(m=>{
+      const name = (m.n||m).toString();
+      const pct = m.p ? Number(String(m.p).replace(/[^0-9.-]/g,'')) : 0;
+      cumulM[name] = (cumulM[name]||0) + (pct || 0);
+    });
+    h.proprietes.forEach(p=>cumulP.add(p));
+  });
+  // attach delete
+  document.querySelectorAll('#mixTable .smallbtn').forEach(b=> b.onclick = ()=>{ MIX.splice(Number(b.dataset.idx),1); renderMix(); });
+
+  mixMoleculesDiv.textContent = Object.keys(cumulM).length ? Object.entries(cumulM).map(([k,v]) => `${k} (${v}%)`).join(', ') : '—';
+  mixPropsDiv.textContent = Array.from(cumulP).length ? Array.from(cumulP).join(', ') : '—';
+}
+
+/* Detail view */
+function showDetail(id){
+  const h = HE_DB.find(x=>x.id===id);
+  if(!h) return;
+  // build detail HTML
+  let molList = h.molecules.map(m => `<li>${(m.n||m)} ${m.p?` — ${m.p}%`:''}</li>`).join('');
+  let voies = Object.keys(h.voies).filter(v=>h.voies[v]).map(v=> v.charAt(0).toUpperCase()+v.slice(1)).join(', ');
+  // risks badges
+  const riskBadges = [];
+  for(const [k,v] of Object.entries(h.risks)){
+    if(v){
+      const cls = (k==='pregnancy' || k==='renal' ? 'danger' : k==='photosens' ? 'warn' : 'warn');
+      const label = k==='pregnancy' ? 'Grossesse' : k==='renal' ? 'Insuffisance rénale' : k==='photosens' ? 'Photosensibilisant' : k;
+      riskBadges.push(`<span class="risk ${cls}" style="padding:.25rem .5rem;border-radius:8px;margin-right:.35rem">${label}</span>`);
+    }
+  }
+  detailContent.innerHTML = `<h3>${h.nom} <small style="color:var(--muted)"> — ${h.latin}</small></h3>
+    <div class="muted">${h.famille} • Partie distillée: <strong>${h.partie || '—'}</strong></div>
+    <div style="margin:.6rem 0">${riskBadges.join(' ') || '<span class="muted">Aucun risque majeur listé</span>'}</div>
+    <h4 style="margin:.4rem 0">Molécules</h4><ul style="margin:0 .2rem .6rem 1.2rem">${molList}</ul>
+    <div class="muted"><strong>Propriétés:</strong> ${h.proprietes.join(', ')}</div>
+    <div class="muted"><strong>Indications:</strong> ${h.indications.join(', ')}</div>
+    <div class="muted"><strong>Voies:</strong> ${voies}</div>
+    <div style="margin-top:.6rem;display:flex;gap:.4rem"><button class="add-btn" onclick="ajouterAuMix('${h.id}')">Ajouter au mélange</button>
+    <button class="smallbtn" onclick="document.getElementById('galenique').scrollIntoView({behavior:'smooth'})">Voir Galénique</button></div>
+    <div style="margin-top:.6rem;color:var(--muted)"><em>${h.notes || ''}</em></div>`;
+}
+
+/* initial render */
+renderResults();
+
+/* Accessibility: show first HE detail on load */
+if(HE_DB.length>0) showDetail(HE_DB[0].id);
+
 </script>
 </body>
 </html>
